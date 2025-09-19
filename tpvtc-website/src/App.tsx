@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
 function App() {
@@ -11,6 +11,20 @@ function App() {
   })
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const heroRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (heroRef.current) {
+        const scrolled = window.pageYOffset
+        const rate = scrolled * -0.5
+        heroRef.current.style.transform = `translateY(${rate}px)`
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -100,7 +114,7 @@ function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="hero-section">
+      <section ref={heroRef} className="hero-section">
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <div className="hero-left">
@@ -199,6 +213,19 @@ function App() {
         </div>
       </section>
 
+      {/* Full Width Image Section */}
+      <section className="full-width-image-section">
+        <div className="full-width-image-overlay"></div>
+        <div className="full-width-image-content">
+          <div className="container">
+            <div className="image-section-text">
+              <h2>Drive with Confidence</h2>
+              <p>Professional training that builds skills for life</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="services-section">
         <div className="container">
@@ -225,6 +252,20 @@ function App() {
               </div>
               <h3>Commercial Vehicle Training</h3>
               <p>Professional training for commercial drivers and heavy vehicle operation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Second Image Section */}
+      <section className="second-image-section">
+        <div className="second-image-overlay"></div>
+        <div className="second-image-content">
+          <div className="container">
+            <div className="second-image-text">
+              <h2>Experience Premium Driving Training</h2>
+              <p>State-of-the-art facilities and expert instructors ready to guide your journey</p>
+              <button className="cta-button">Learn More</button>
             </div>
           </div>
         </div>
