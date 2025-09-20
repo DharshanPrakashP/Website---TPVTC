@@ -171,8 +171,9 @@ function App() {
         <div className="second-image-content">
           <div className="container">
             <div className="second-image-text">
-              <h2>Experience Premium Driving Training</h2>
-              <p>State-of-the-art facilities and expert instructors ready to guide your journey</p>
+              <h2>The Road is Better Together.</h2>
+              <h3>Find Your Crew.</h3>
+              <p>More than just a VTC, we're a community. Join us for regular events, custom paint jobs, and a friendly network of drivers who make every haul an adventure.</p>
               <button className="cta-button">Learn More</button>
             </div>
           </div>
