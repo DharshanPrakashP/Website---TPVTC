@@ -100,13 +100,13 @@ function App() {
           <div className="hero-center">
             <h1 className="hero-title">
               Now<br />
-              It's easy for you<br />
-              <span className="hero-highlight">learn to drive</span>
+              It's easy to haul cargo<br />
+              <span className="hero-highlight">Join our VTC</span>
             </h1>
             <p className="hero-description">
-              A premier training center that flows with modern teaching methods and supplies 
-              you with the necessary skills. It is a comprehensive training facility, 
-              in which expert instructors guide you.
+              Join our thriving virtual trucking community! Experience realistic convoys, 
+              organized events, and a supportive network of drivers. Haul across Europe 
+              and grow your virtual career with us.
             </p>
             <div className="hero-video">
               <button 
