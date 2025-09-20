@@ -4,13 +4,33 @@ import './App.css'
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
+  const parallaxRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
+      // Hero parallax effect
       if (heroRef.current) {
         const scrolled = window.pageYOffset
         const rate = scrolled * -0.5
         heroRef.current.style.transform = `translateY(${rate}px)`
+      }
+
+      // Third image parallax effect
+      if (parallaxRef.current) {
+        const scrolled = window.pageYOffset
+        const element = parallaxRef.current
+        const elementTop = element.offsetTop
+        const elementHeight = element.offsetHeight
+        const windowHeight = window.innerHeight
+        
+        // Check if element is in viewport
+        if (scrolled + windowHeight > elementTop && scrolled < elementTop + elementHeight) {
+          const yPos = -(scrolled - elementTop) * 0.3
+          const parallaxElement = element.querySelector('.full-width-image-section::before') as HTMLElement
+          if (parallaxElement) {
+            parallaxElement.style.transform = `translateY(${yPos}px)`
+          }
+        }
       }
     }
 
@@ -121,14 +141,56 @@ function App() {
         </div>
       </section>
 
-      {/* Full Width Image Section */}
-      <section className="full-width-image-section">
+      {/* Why Join Our VTC Section */}
+      <section ref={parallaxRef} className="full-width-image-section">
         <div className="full-width-image-overlay"></div>
         <div className="full-width-image-content">
           <div className="container">
-            <div className="image-section-text">
-              <h2>Drive with Confidence</h2>
-              <p>Professional training that builds skills for life</p>
+            <div className="why-join-section">
+              <h2>Why Join Tamil Pasanga VTC?</h2>
+              <p>
+                Experience the ultimate virtual trucking adventure with a community that values 
+                friendship, professionalism, and the thrill of the open road. Join hundreds of 
+                drivers from around the world in our growing family.
+              </p>
+              
+              <div className="benefits-grid">
+                <div className="benefit-item">
+                  <span className="benefit-icon">🚛</span>
+                  <h3>Organized Convoys</h3>
+                  <p>Join weekly convoys with professional drivers across Europe's most scenic routes.</p>
+                </div>
+                
+                <div className="benefit-item">
+                  <span className="benefit-icon">🎯</span>
+                  <h3>Special Events</h3>
+                  <p>Participate in exclusive events, competitions, and seasonal celebrations.</p>
+                </div>
+                
+                <div className="benefit-item">
+                  <span className="benefit-icon">👥</span>
+                  <h3>Active Community</h3>
+                  <p>Connect with friendly drivers, share experiences, and build lasting friendships.</p>
+                </div>
+                
+                <div className="benefit-item">
+                  <span className="benefit-icon">🏆</span>
+                  <h3>Career Growth</h3>
+                  <p>Advance through our ranking system and earn recognition for your achievements.</p>
+                </div>
+                
+                <div className="benefit-item">
+                  <span className="benefit-icon">🎨</span>
+                  <h3>Custom Paint Jobs</h3>
+                  <p>Stand out with exclusive VTC paint schemes and personalized truck designs.</p>
+                </div>
+                
+                <div className="benefit-item">
+                  <span className="benefit-icon">📱</span>
+                  <h3>24/7 Support</h3>
+                  <p>Get help anytime through our Discord community and dedicated support team.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -137,29 +199,28 @@ function App() {
       {/* Services Section */}
       <section className="services-section">
         <div className="container">
-          <h2 className="section-title">Our Training Services</h2>
+          <h2 className="section-title">Why Join Tamil Pasanga VTC?</h2>
           <div className="services-grid">
             <div className="service-card">
               <div className="service-image">
-                {/* Image will be added when you upload assets */}
-                <div className="service-placeholder">🚗</div>
+                <div className="service-placeholder">�</div>
               </div>
-              <h3>Car Driving Lessons</h3>
-              <p>Learn the fundamentals of safe car driving with our expert instructors.</p>
+              <h3>Organized Convoys</h3>
+              <p>Join scheduled convoys with experienced drivers across Europe's highways.</p>
             </div>
             <div className="service-card">
               <div className="service-image">
-                <div className="service-placeholder">🏍️</div>
+                <div className="service-placeholder">�</div>
               </div>
-              <h3>Motorcycle Training</h3>
-              <p>Master two-wheel transportation with comprehensive motorcycle training.</p>
+              <h3>Regular Events</h3>
+              <p>Participate in community events, competitions, and special cargo missions.</p>
             </div>
             <div className="service-card">
               <div className="service-image">
-                <div className="service-placeholder">🚛</div>
+                <div className="service-placeholder">�</div>
               </div>
-              <h3>Commercial Vehicle Training</h3>
-              <p>Professional training for commercial drivers and heavy vehicle operation.</p>
+              <h3>Friendly Community</h3>
+              <p>Connect with like-minded drivers and build lasting friendships on the road.</p>
             </div>
           </div>
         </div>
