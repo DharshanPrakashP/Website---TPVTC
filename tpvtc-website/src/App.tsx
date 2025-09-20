@@ -174,7 +174,12 @@ function App() {
               <h2>The Road is Better Together.</h2>
               <h3>Find Your Crew.</h3>
               <p>More than just a VTC, we're a community. Join us for regular events, custom paint jobs, and a friendly network of drivers who make every haul an adventure.</p>
-              <button className="cta-button">Learn More</button>
+              <button 
+                className="cta-button"
+                onClick={() => window.open('https://truckersmp.com/vtc/73933', '_blank')}
+              >
+                Learn More
+              </button>
             </div>
           </div>
         </div>
