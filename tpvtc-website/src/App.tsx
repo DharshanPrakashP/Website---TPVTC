@@ -2,14 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
 function App() {
-  const [formData, setFormData] = useState({
-    pickupLocation: '',
-    dropoffLocation: '',
-    pickupDate: '',
-    dropoffDate: '',
-    pickupTime: ''
-  })
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
 
@@ -25,18 +17,6 @@ function App() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Form submitted:', formData)
-  }
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -117,7 +97,7 @@ function App() {
       <section ref={heroRef} className="hero-section">
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <div className="hero-left">
+          <div className="hero-center">
             <h1 className="hero-title">
               Now<br />
               It's easy for you<br />
@@ -133,81 +113,6 @@ function App() {
                 <span className="play-icon">▶</span>
               </button>
               <span className="video-text">Easy steps for learning to drive</span>
-            </div>
-          </div>
-
-          <div className="hero-right">
-            <div className="booking-card">
-              <h3 className="booking-title">Start your journey</h3>
-              
-              <form onSubmit={handleSubmit} className="booking-form">
-                <div className="form-group">
-                  <label htmlFor="pickupLocation">PICK-UP LOCATION</label>
-                  <input
-                    type="text"
-                    id="pickupLocation"
-                    name="pickupLocation"
-                    placeholder="City, Center, Branch, etc."
-                    value={formData.pickupLocation}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="dropoffLocation">TRAINING LOCATION</label>
-                  <input
-                    type="text"
-                    id="dropoffLocation"
-                    name="dropoffLocation"
-                    placeholder="City, Center, Branch, etc."
-                    value={formData.dropoffLocation}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="pickupDate">START DATE</label>
-                    <input
-                      type="date"
-                      id="pickupDate"
-                      name="pickupDate"
-                      value={formData.pickupDate}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="dropoffDate">END DATE</label>
-                    <input
-                      type="date"
-                      id="dropoffDate"
-                      name="dropoffDate"
-                      value={formData.dropoffDate}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="pickupTime">PREFERRED TIME</label>
-                  <input
-                    type="time"
-                    id="pickupTime"
-                    name="pickupTime"
-                    value={formData.pickupTime}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <button type="submit" className="search-button">
-                  Book Training
-                </button>
-              </form>
             </div>
           </div>
         </div>

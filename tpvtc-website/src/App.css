@@ -127,12 +127,18 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 4rem;
+  display: flex;
+  justify-content: center;
   align-items: center;
   position: relative;
   z-index: 2;
+  min-height: 80vh;
+}
+
+.hero-center {
+  text-align: center;
+  color: white;
+  max-width: 800px;
 }
 
 .hero-left {
@@ -164,7 +170,9 @@ body {
 .hero-video {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
+  margin-top: 2rem;
 }
 
 .play-button {
@@ -189,105 +197,7 @@ body {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-/* Booking Card */
-.hero-right {
-  display: flex;
-  justify-content: center;
-}
-
-.booking-card {
-  background: white;
-  border-radius: 15px;
-  padding: 2rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 400px;
-}
-
-.booking-title {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.booking-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #666;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.form-group input {
-  padding: 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background: white;
-  width: 100%;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #ff6b35;
-  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.2);
-  transform: translateY(-1px);
-}
-
-.form-group input:hover {
-  border-color: #ccc;
-}
-
-/* Style date and time inputs for better mobile experience */
-.form-group input[type="date"],
-.form-group input[type="time"] {
-  cursor: pointer;
-}
-
-.form-group input[type="date"]::-webkit-calendar-picker-indicator,
-.form-group input[type="time"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  filter: invert(0.5);
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.search-button {
-  background: #ff6b35;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin-top: 1rem;
-}
-
-.search-button:hover {
-  background: #e55a2e;
-}
+/* Play Button Styles */
 
 /* Services Section */
 .services-section {
@@ -578,7 +488,6 @@ body {
   .hero-content {
     max-width: 100%;
     padding: 0 2rem;
-    gap: 3rem;
   }
   
   .hero-title {
@@ -596,19 +505,12 @@ body {
   }
   
   .hero-content {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    text-align: center;
     padding-top: 6rem;
+    min-height: 70vh;
   }
   
   .hero-title {
     font-size: 2.8rem;
-  }
-  
-  .booking-card {
-    max-width: 500px;
-    margin: 0 auto;
   }
   
   .services-grid {
