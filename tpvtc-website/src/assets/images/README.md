@@ -1,6 +1,6 @@
 # Assets Folder
 
-This folder contains images for the TPVTC website.
+This folder contains images for the Tamil Pasanga VTC website.
 
 ## Recommended Images to Upload:
 
@@ -9,7 +9,7 @@ This folder contains images for the TPVTC website.
 - `hero-car.png` - Main car image for the hero section (transparent background preferred)
 
 ### Logo:
-- `logo.png` - TPVTC logo (transparent background)
+- `logo.png` - Tamil Pasanga VTC logo (transparent background)
 - `logo-white.png` - White version of the logo for dark backgrounds
 
 ### Services:

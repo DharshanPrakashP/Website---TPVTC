@@ -28,7 +28,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <div className="nav-logo">
-            <span className="logo-part-1">TP</span>
+            <span className="logo-part-1">Tamil Pasanga </span>
             <span className="logo-part-2">VTC</span>
           </div>
           
@@ -109,10 +109,13 @@ function App() {
               in which expert instructors guide you.
             </p>
             <div className="hero-video">
-              <button className="play-button">
+              <button 
+                className="play-button"
+                onClick={() => window.open('https://truckersmp.com/vtc/73933/recruitment-form/3515-driver-recruitment-form', '_blank')}
+              >
                 <span className="play-icon">▶</span>
               </button>
-              <span className="video-text">Easy steps for learning to drive</span>
+              <span className="video-text">just press the button to apply as Driver</span>
             </div>
           </div>
         </div>
@@ -179,7 +182,7 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 TPVTC. All rights reserved.</p>
+          <p>&copy; 2025 Tamil Pasanga VTC. All rights reserved.</p>
         </div>
       </footer>
     </div>
