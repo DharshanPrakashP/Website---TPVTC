@@ -27,7 +27,8 @@ function About() {
         <div className="nav-container">
           <div className="nav-logo">
             <Link to="/">
-              <span className="logo-text">AUTOROAD</span>
+              <span className="logo-part-1">Tamil Pasanga </span>
+              <span className="logo-part-2">Logistics</span>
             </Link>
           </div>
           
@@ -109,23 +110,23 @@ function About() {
               <div className="section-label">ABOUT US</div>
               <h2>Tamil Pasanga Virtual Trucking Company</h2>
               <p>
-                Tamil Pasanga VTC Is Virtual Trucking Company based around Euro Truck Simulator 2 and American Truck Simulator. It was Founded On 13 Aug 2024 To Bring People Together. It Was Founded By Powerful Gaming.
+                Tamil Pasanga Logistics Is Virtual Trucking Company based around Euro Truck Simulator 2 and American Truck Simulator. It was Founded On 13 Aug 2024 To Bring People Together. It Was Founded By Powerful Gaming.
               </p>
               <p>
                 Welcome to the Tamil Pasanga Virtual Trucking Community, where the open road meets endless opportunity! Immerse yourself in a world where innovation and camaraderie fuel the miles you'll conquer. Designed for trucking enthusiasts of all levels, our community provides an immersive experience that redefines virtual logistics—as you roll through breathtaking routes and engage in dynamic missions that transport you into the driver's seat.
               </p>
               <p>
-                Our community celebrates the spirit of trucking through a vibrant online platform, connecting players around the globe. Whether you're a seasoned veteran of the simulation or a newcomer eager to explore, Tamil Pasanga VTC is your haven for sharing knowledge, logistics tips, and unforgettable trucking adventures. With a robust support system in place, members can tap into rich resources—from realistic trucking strategies to tech tutorials—ensuring everyone hits the road at their best.
+                Our community celebrates the spirit of trucking through a vibrant online platform, connecting players around the globe. Whether you're a seasoned veteran of the simulation or a newcomer eager to explore, Tamil Pasanga Logistics is your haven for sharing knowledge, logistics tips, and unforgettable trucking adventures. With a robust support system in place, members can tap into rich resources—from realistic trucking strategies to tech tutorials—ensuring everyone hits the road at their best.
               </p>
               <p>
-                At Tamil Pasanga VTC, we believe that every mile matters. Our regularly-hosted events, convoy drives, and competitive challenges bring excitement and friendly rivalry to your experience, making your virtual journeys not just everyday missions, but memorable escapades. As part of our community, you'll join a family that thrives on the joy of the journey, celebrating milestones and achievements together.
+                At Tamil Pasanga Logistics, we believe that every mile matters. Our regularly-hosted events, convoy drives, and competitive challenges bring excitement and friendly rivalry to your experience, making your virtual journeys not just everyday missions, but memorable escapades. As part of our community, you'll join a family that thrives on the joy of the journey, celebrating milestones and achievements together.
               </p>
               <p>
                 Safety and respect are at the forefront of our ethos, fostering a welcoming environment for all members to enjoy their virtual trucking experience.
               </p>
             </div>
             <div className="about-image">
-              <img src="/src/assets/images/aboutus.PNG" alt="Tamil Pasanga VTC About Us" />
+              <img src="/src/assets/images/aboutus.PNG" alt="Tamil Pasanga Logistics About Us" />
             </div>
           </div>
         </div>
@@ -236,7 +237,7 @@ function About() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 Tamil Pasanga VTC. All rights reserved.</p>
+          <p>&copy; 2025 Tamil Pasanga Logistics. All rights reserved.</p>
         </div>
       </footer>
     </div>

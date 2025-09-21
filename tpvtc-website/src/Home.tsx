@@ -51,7 +51,7 @@ function Home() {
           <div className="nav-logo">
             <Link to="/">
               <span className="logo-part-1">Tamil Pasanga </span>
-              <span className="logo-part-2">VTC</span>
+              <span className="logo-part-2">Logistics</span>
             </Link>
           </div>
           
@@ -116,10 +116,10 @@ function Home() {
         <div className="hero-content">
           <div className="hero-center">
             <h1 className="hero-title">
-              <span className="hero-highlight">Welcome to TAMIL PASANGA VTC</span>
+              <span className="hero-highlight">Welcome to TAMIL PASANGA LOGISTICS</span>
             </h1>
             <p className="hero-description">
-              Tamil Pasanga VTC is a friendly and active Virtual Trucking Company built by Tamil gamers and truck enthusiasts who love driving together on TruckersMP. Our goal is to create a fun, realistic, and respectful community where players can enjoy convoys, explore Europe's roads, and represent Tamil unity on the trucking platform.
+              Tamil Pasanga Logistics is a friendly and active Virtual Trucking Company built by Tamil gamers and truck enthusiasts who love driving together on TruckersMP. Our goal is to create a fun, realistic, and respectful community where players can enjoy convoys, explore Europe's roads, and represent Tamil unity on the trucking platform.
             </p>
             <div className="hero-video">
               <button 
@@ -134,13 +134,13 @@ function Home() {
         </div>
       </section>
 
-      {/* Why Join Our VTC Section */}
+      {/* Why Join Our Logistics Section */}
       <section ref={parallaxRef} className="full-width-image-section">
         <div className="full-width-image-overlay"></div>
         <div className="full-width-image-content">
           <div className="container">
             <div className="why-join-section">
-              <h2>Why Join Tamil Pasanga VTC?</h2>
+              <h2>Why Join Tamil Pasanga Logistics?</h2>
               <p>
                 Experience the ultimate virtual trucking adventure with a community that values 
                 friendship, professionalism, and the thrill of the open road. Join hundreds of 
@@ -175,7 +175,7 @@ function Home() {
                 <div className="benefit-item">
                   <span className="benefit-icon">🎨</span>
                   <h3>Custom Paint Jobs</h3>
-                  <p>Stand out with exclusive VTC paint schemes and personalized truck designs.</p>
+                  <p>Stand out with exclusive Logistics paint schemes and personalized truck designs.</p>
                 </div>
                 
                 <div className="benefit-item">
@@ -197,7 +197,7 @@ function Home() {
             <div className="second-image-text">
               <h2>The Road is Better Together.</h2>
               <h3>Find Your Crew.</h3>
-              <p>More than just a VTC, we're a community. Join us for regular events, custom paint jobs, and a friendly network of drivers who make every haul an adventure.</p>
+              <p>More than just a Logistics company, we're a community. Join us for regular events, custom paint jobs, and a friendly network of drivers who make every haul an adventure.</p>
               <button 
                 className="cta-button"
                 onClick={() => window.open('https://truckersmp.com/vtc/73933', '_blank')}
@@ -212,7 +212,7 @@ function Home() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 Tamil Pasanga VTC. All rights reserved.</p>
+          <p>&copy; 2025 Tamil Pasanga Logistics. All rights reserved.</p>
         </div>
       </footer>
     </div>
