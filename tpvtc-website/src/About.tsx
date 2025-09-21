@@ -40,10 +40,7 @@ function About() {
               <Link to="/about" className="nav-link active">About</Link>
             </li>
             <li className="nav-item">
-              <a href="#pricing" className="nav-link">Pricing</a>
-            </li>
-            <li className="nav-item">
-              <a href="#services" className="nav-link">Our Services</a>
+              <a href="#gallery" className="nav-link">Gallery</a>
             </li>
             <li className="nav-item">
               <a href="#blog" className="nav-link">Blog</a>
@@ -76,10 +73,7 @@ function About() {
                 <Link to="/about" className="mobile-nav-link active" onClick={toggleMobileMenu}>About</Link>
               </li>
               <li className="mobile-nav-item">
-                <a href="#pricing" className="mobile-nav-link" onClick={toggleMobileMenu}>Pricing</a>
-              </li>
-              <li className="mobile-nav-item">
-                <a href="#services" className="mobile-nav-link" onClick={toggleMobileMenu}>Our Services</a>
+                <a href="#gallery" className="mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
               </li>
               <li className="mobile-nav-item">
                 <a href="#blog" className="mobile-nav-link" onClick={toggleMobileMenu}>Blog</a>
@@ -113,63 +107,32 @@ function About() {
           <div className="about-content">
             <div className="about-text">
               <div className="section-label">ABOUT US</div>
-              <h2>Choose A Perfect Car</h2>
+              <h2>Tamil Pasanga Virtual Trucking Company</h2>
               <p>
-                A small river named Duden flows by their place and supplies it 
-                with the necessary regelialia. It is a paradisematic country, in 
-                which roasted parts of sentences fly into your mouth.
+                Tamil Pasanga VTC Is Virtual Trucking Company based around Euro Truck Simulator 2 and American Truck Simulator. It was Founded On 13 Aug 2024 To Bring People Together. It Was Founded By Powerful Gaming.
               </p>
               <p>
-                On her way she met a copy. The copy warned the Little Blind 
-                Text, that where it came from it would have been rewritten a 
-                thousand times and everything that was left from its origin 
-                would be the word "and" and the Little Blind Text should turn 
-                around and return to its own, safe country. But nothing the 
-                copy said could convince her and so it didn't take long until a 
-                few insidious Copy Writers ambushed her, made her drunk with 
-                Longe and Parole and dragged her into their agency, where 
-                they abused her for their.
+                Welcome to the Tamil Pasanga Virtual Trucking Community, where the open road meets endless opportunity! Immerse yourself in a world where innovation and camaraderie fuel the miles you'll conquer. Designed for trucking enthusiasts of all levels, our community provides an immersive experience that redefines virtual logistics—as you roll through breathtaking routes and engage in dynamic missions that transport you into the driver's seat.
               </p>
-              <button className="search-button">Search Vehicle</button>
+              <p>
+                Our community celebrates the spirit of trucking through a vibrant online platform, connecting players around the globe. Whether you're a seasoned veteran of the simulation or a newcomer eager to explore, Tamil Pasanga VTC is your haven for sharing knowledge, logistics tips, and unforgettable trucking adventures. With a robust support system in place, members can tap into rich resources—from realistic trucking strategies to tech tutorials—ensuring everyone hits the road at their best.
+              </p>
+              <p>
+                At Tamil Pasanga VTC, we believe that every mile matters. Our regularly-hosted events, convoy drives, and competitive challenges bring excitement and friendly rivalry to your experience, making your virtual journeys not just everyday missions, but memorable escapades. As part of our community, you'll join a family that thrives on the joy of the journey, celebrating milestones and achievements together.
+              </p>
+              <p>
+                Safety and respect are at the forefront of our ethos, fostering a welcoming environment for all members to enjoy their virtual trucking experience.
+              </p>
             </div>
             <div className="about-image">
-              <img src="/api/placeholder/600/400" alt="Group with car" />
+              <img src="/src/assets/images/aboutus.PNG" alt="Tamil Pasanga VTC About Us" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Our Services Section */}
-      <section className="services-section">
-        <div className="container">
-          <div className="section-header">
-            <div className="section-label">OUR SERVICES</div>
-            <h2>Our Services</h2>
-          </div>
-          <div className="services-grid">
-            <div className="service-item">
-              <div className="service-icon">🚗</div>
-              <h3>24/7 Car Support</h3>
-              <p>A small river named Duden flows by their place and supplies it with you</p>
-            </div>
-            <div className="service-item">
-              <div className="service-icon">📍</div>
-              <h3>Lots of location</h3>
-              <p>A small river named Duden flows by their place and supplies it with you</p>
-            </div>
-            <div className="service-item">
-              <div className="service-icon">📋</div>
-              <h3>Reservation</h3>
-              <p>A small river named Duden flows by their place and supplies it with you</p>
-            </div>
-            <div className="service-item">
-              <div className="service-icon">🚙</div>
-              <h3>Rental Cars</h3>
-              <p>A small river named Duden flows by their place and supplies it with you</p>
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
       {/* How it works Section */}
       <section className="workflow-section">
