@@ -119,14 +119,10 @@ function App() {
         <div className="hero-content">
           <div className="hero-center">
             <h1 className="hero-title">
-              Now<br />
-              It's easy to haul cargo<br />
-              <span className="hero-highlight">Join our VTC</span>
+              <span className="hero-highlight">Welcome to TAMIL PASANGA VTC</span>
             </h1>
             <p className="hero-description">
-              Join our thriving virtual trucking community! Experience realistic convoys, 
-              organized events, and a supportive network of drivers. Haul across Europe 
-              and grow your virtual career with us.
+              Tamil Pasanga VTC is a friendly and active Virtual Trucking Company built by Tamil gamers and truck enthusiasts who love driving together on TruckersMP. Our goal is to create a fun, realistic, and respectful community where players can enjoy convoys, explore Europe's roads, and represent Tamil unity on the trucking platform.
             </p>
             <div className="hero-video">
               <button 
