@@ -192,35 +192,7 @@ function App() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="services-section">
-        <div className="container">
-          <h2 className="section-title">Why Join Tamil Pasanga VTC?</h2>
-          <div className="services-grid">
-            <div className="service-card">
-              <div className="service-image">
-                <div className="service-placeholder">�</div>
-              </div>
-              <h3>Organized Convoys</h3>
-              <p>Join scheduled convoys with experienced drivers across Europe's highways.</p>
-            </div>
-            <div className="service-card">
-              <div className="service-image">
-                <div className="service-placeholder">�</div>
-              </div>
-              <h3>Regular Events</h3>
-              <p>Participate in community events, competitions, and special cargo missions.</p>
-            </div>
-            <div className="service-card">
-              <div className="service-image">
-                <div className="service-placeholder">�</div>
-              </div>
-              <h3>Friendly Community</h3>
-              <p>Connect with like-minded drivers and build lasting friendships on the road.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
       {/* Second Image Section */}
       <section className="second-image-section">
