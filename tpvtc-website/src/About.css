@@ -8,8 +8,19 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  right:.page-header {
+  height: 100vh;
   background: transparent;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+  position: relative;
+  padding-left: 120px;
+}ound: transparent;
   z-index: 1000;
   padding: 1rem 0;
   transition: all 0.3s ease;
@@ -162,10 +173,10 @@
   }
 }
 
-/* Page Header */
 .page-header {
   height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/hero-bg.PNG');
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)),
+              url('../public/images/about-background.PNG');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
