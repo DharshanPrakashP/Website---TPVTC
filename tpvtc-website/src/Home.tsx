@@ -67,7 +67,7 @@ function Home() {
               <a href="#gallery" className="nav-link">Gallery</a>
             </li>
             <li className="nav-item">
-              <a href="#blog" className="nav-link">Blog</a>
+              <Link to="/rules" className="nav-link">Rules</Link>
             </li>
             <li className="nav-item">
               <a href="#contact" className="nav-link">Contact</a>
@@ -100,7 +100,7 @@ function Home() {
                 <a href="#gallery" className="mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
               </li>
               <li className="mobile-nav-item">
-                <a href="#blog" className="mobile-nav-link" onClick={toggleMobileMenu}>Blog</a>
+                <Link to="/rules" className="mobile-nav-link" onClick={toggleMobileMenu}>Rules</Link>
               </li>
               <li className="mobile-nav-item">
                 <a href="#contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact</a>
