@@ -10,7 +10,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background: transparent;
+  background: blur(transparent);
   z-index: 1000;
   padding: 15px 0;
   transition: all 0.3s ease;

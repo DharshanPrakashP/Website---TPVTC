@@ -1,10 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './Rules.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function Rules() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  
+  // GSAP refs
+  const navbarRef = useRef<HTMLDivElement>(null)
+  const breadcrumbRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const sectionsRef = useRef<HTMLDivElement>(null)
+  const rulesGridRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +27,89 @@ function Rules() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // GSAP animations
+  useEffect(() => {
+    if (navbarRef.current && breadcrumbRef.current && titleRef.current) {
+      const tl = gsap.timeline()
+      
+      // Main hero timeline
+      tl.fromTo(navbarRef.current, 
+        { y: -100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+      )
+      .fromTo(breadcrumbRef.current,
+        { x: -50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+        "-=0.4"
+      )
+      .fromTo(titleRef.current,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
+        "-=0.3"
+      )
+    }
+
+    // Animate rules grid on scroll
+    if (rulesGridRef.current) {
+      const ruleCards = rulesGridRef.current.querySelectorAll('.rule-category')
+      
+      gsap.fromTo(ruleCards,
+        { y: 60, opacity: 0, scale: 0.9 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "back.out(1.2)",
+          scrollTrigger: {
+            trigger: rulesGridRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      )
+      
+      // Add hover animations for rule cards
+      ruleCards.forEach((card: any) => {
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, { scale: 1.05, duration: 0.3, ease: "power2.out" })
+        })
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { scale: 1, duration: 0.3, ease: "power2.out" })
+        })
+      })
+    }
+
+    // Animate section labels and headings
+    if (sectionsRef.current) {
+      const sectionLabel = sectionsRef.current.querySelector('.rules-section-label')
+      const sectionHeading = sectionsRef.current.querySelector('h2')
+      
+      if (sectionLabel && sectionHeading) {
+        gsap.fromTo([sectionLabel, sectionHeading],
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: sectionsRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        )
+      }
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    }
+  }, [])
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
@@ -23,7 +117,7 @@ function Rules() {
   return (
     <div className="Rules">
       {/* Navigation */}
-      <nav className={`rules-navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <nav ref={navbarRef} className={`rules-navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="rules-nav-container">
           <div className="rules-nav-logo">
             <Link to="/">
@@ -90,12 +184,12 @@ function Rules() {
       {/* Rules Page Header */}
       <section className="rules-page-header">
         <div className="rules-page-header-content">
-          <div className="rules-breadcrumb">
+          <div ref={breadcrumbRef} className="rules-breadcrumb">
             <Link to="/">HOME</Link>
             <span className="rules-separator"> / </span>
             <span className="rules-current">RULES</span>
           </div>
-          <h1 className="rules-page-title">
+          <h1 ref={titleRef} className="rules-page-title">
             <span className="rules-title-accent"></span>
             RULES
           </h1>
@@ -103,12 +197,12 @@ function Rules() {
       </section>
 
       {/* Rules Content Section */}
-      <section className="rules-content-section">
+      <section ref={sectionsRef} className="rules-content-section">
         <div className="rules-container">
           <div className="rules-section-label">COMPANY GUIDELINES</div>
           <h2>Tamil Pasanga Logistics Rules & Regulations</h2>
           
-          <div className="rules-grid">
+          <div ref={rulesGridRef} className="rules-grid">
             <div className="rule-category">
               <h3>General Conduct</h3>
               <ul>

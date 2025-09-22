@@ -1,10 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './About.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function About() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  
+  // GSAP refs
+  const navbarRef = useRef<HTMLElement>(null)
+  const breadcrumbRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const missionRef = useRef<HTMLDivElement>(null)
+  const valuesRef = useRef<HTMLDivElement>(null)
+  const teamRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +28,123 @@ function About() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // GSAP animations
+  useEffect(() => {
+    // Hero entrance animations
+    const tl = gsap.timeline({ delay: 0.3 })
+    
+    if (navbarRef.current) {
+      gsap.set(navbarRef.current, { y: -100, opacity: 0 })
+      tl.to(navbarRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out"
+      }, 0)
+    }
+
+    if (breadcrumbRef.current) {
+      gsap.set(breadcrumbRef.current, { x: -50, opacity: 0 })
+      tl.to(breadcrumbRef.current, {
+        x: 0,
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out"
+      }, 0.3)
+    }
+
+    if (titleRef.current) {
+      gsap.set(titleRef.current, { y: 50, opacity: 0 })
+      tl.to(titleRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out"
+      }, 0.6)
+    }
+
+    // Animate mission section
+    if (missionRef.current) {
+      gsap.fromTo(missionRef.current.children, 
+        {
+          y: 60,
+          opacity: 0,
+          scale: 0.9
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: missionRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      )
+    }
+
+    // Animate values section
+    if (valuesRef.current) {
+      const valueItems = valuesRef.current.querySelectorAll('.value-item')
+      gsap.fromTo(valueItems, 
+        {
+          y: 80,
+          opacity: 0,
+          rotationY: 15
+        },
+        {
+          y: 0,
+          opacity: 1,
+          rotationY: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "back.out(1.2)",
+          scrollTrigger: {
+            trigger: valuesRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      )
+    }
+
+    // Animate team section
+    if (teamRef.current) {
+      const teamMembers = teamRef.current.querySelectorAll('.team-member')
+      gsap.fromTo(teamMembers, 
+        {
+          y: 100,
+          opacity: 0,
+          scale: 0.8
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: teamRef.current,
+            start: "top 80%",
+            end: "bottom 20%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      )
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    }
+  }, [])
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
@@ -23,7 +152,7 @@ function About() {
   return (
     <div className="About">
       {/* Navigation */}
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <nav ref={navbarRef} className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
           <div className="nav-logo">
             <Link to="/">
@@ -90,12 +219,12 @@ function About() {
       {/* Page Header */}
       <section className="page-header">
         <div className="page-header-content">
-          <div className="breadcrumb">
+          <div ref={breadcrumbRef} className="breadcrumb">
             <Link to="/">HOME</Link>
             <span className="separator"> / </span>
             <span className="current">About Us</span>
           </div>
-          <h1 className="page-title">
+          <h1 ref={titleRef} className="page-title">
             <span className="title-accent"></span>
             About Us
           </h1>
@@ -103,7 +232,7 @@ function About() {
       </section>
 
       {/* About Us Section */}
-      <section className="about-section">
+      <section ref={missionRef} className="about-section">
         <div className="container">
           <div className="about-content">
             <div className="about-text">
@@ -136,7 +265,7 @@ function About() {
      
 
       {/* How it works Section */}
-      <section className="workflow-section">
+      <section ref={valuesRef} className="workflow-section">
         <div className="workflow-overlay"></div>
         <div className="container">
           <div className="section-header">
@@ -177,7 +306,7 @@ function About() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="testimonials-section">
+      <section ref={teamRef} className="testimonials-section">
         <div className="container">
           <div className="section-header">
             <div className="section-label">TESTIMONIAL</div>

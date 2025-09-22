@@ -1,13 +1,143 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
   const parallaxRef = useRef<HTMLElement>(null)
+  const navbarRef = useRef<HTMLElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
+  const videoButtonRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // GSAP Hero Entrance Animations
+    const tl = gsap.timeline({ delay: 0.5 })
+    
+    // Animate navbar
+    if (navbarRef.current) {
+      gsap.set(navbarRef.current, { y: -100, opacity: 0 })
+      tl.to(navbarRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      }, 0)
+    }
+
+    // Animate hero title
+    if (titleRef.current) {
+      gsap.set(titleRef.current, { y: 100, opacity: 0 })
+      tl.to(titleRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power3.out"
+      }, 0.3)
+    }
+
+    // Animate hero description
+    if (descriptionRef.current) {
+      gsap.set(descriptionRef.current, { y: 50, opacity: 0 })
+      tl.to(descriptionRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out"
+      }, 0.8)
+    }
+
+    // Animate video button
+    if (videoButtonRef.current) {
+      gsap.set(videoButtonRef.current, { scale: 0, opacity: 0 })
+      tl.to(videoButtonRef.current, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.8,
+        ease: "back.out(1.7)"
+      }, 1.2)
+    }
+
+    // Animate benefits cards on scroll
+    gsap.utils.toArray('.benefit-item').forEach((card: any, index) => {
+      gsap.fromTo(card, 
+        {
+          y: 100,
+          opacity: 0,
+          scale: 0.8
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse"
+          },
+          delay: index * 0.1
+        }
+      )
+    })
+
+    // Animate workflow items
+    gsap.utils.toArray('.workflow-item').forEach((item: any, index) => {
+      gsap.fromTo(item, 
+        {
+          y: 80,
+          opacity: 0,
+          scale: 0.8
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          ease: "back.out(1.2)",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse"
+          },
+          delay: index * 0.15
+        }
+      )
+    })
+
+    // Animate testimonial items
+    gsap.utils.toArray('.testimonial-item').forEach((item: any, index) => {
+      gsap.fromTo(item, 
+        {
+          y: 60,
+          opacity: 0,
+          rotationY: 15
+        },
+        {
+          y: 0,
+          opacity: 1,
+          rotationY: 0,
+          duration: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse"
+          },
+          delay: index * 0.2
+        }
+      )
+    })
+
     const handleScroll = () => {
       // Hero parallax effect
       if (heroRef.current) {
@@ -36,7 +166,10 @@ function Home() {
     }
 
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill())
+    }
   }, [])
 
   const toggleMobileMenu = () => {
@@ -46,7 +179,7 @@ function Home() {
   return (
     <div className="Home">
       {/* Navigation */}
-      <nav className="navbar">
+      <nav ref={navbarRef} className="navbar">
         <div className="nav-container">
           <div className="nav-logo">
             <Link to="/">
@@ -115,13 +248,13 @@ function Home() {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <div className="hero-center">
-            <h1 className="hero-title">
+            <h1 ref={titleRef} className="hero-title">
               <span className="hero-highlight">Welcome to TAMIL PASANGA LOGISTICS</span>
             </h1>
-            <p className="hero-description">
+            <p ref={descriptionRef} className="hero-description">
               Tamil Pasanga Logistics is a friendly and active Virtual Trucking Company built by Tamil gamers and truck enthusiasts who love driving together on TruckersMP. Our goal is to create a fun, realistic, and respectful community where players can enjoy convoys, explore Europe's roads, and represent Tamil unity on the trucking platform.
             </p>
-            <div className="hero-video">
+            <div ref={videoButtonRef} className="hero-video">
               <button 
                 className="play-button"
                 onClick={() => window.open('https://truckersmp.com/vtc/73933/recruitment-form/3515-driver-recruitment-form', '_blank')}
