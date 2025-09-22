@@ -740,3 +740,71 @@
     font-size: 1.8rem;
   }
 }
+
+/* ===============================
+   ABOUT PAGE GSAP ENHANCEMENTS
+   =============================== */
+
+/* Enhanced hover states for workflow items */
+.workflow-item {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+}
+
+.workflow-item:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+.workflow-item:hover .icon-circle {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 15px 30px rgba(255, 107, 53, 0.3);
+}
+
+/* Enhanced testimonial animations */
+.testimonial-item {
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.testimonial-item:hover {
+  transform: translateY(-5px) rotateY(2deg);
+}
+
+.testimonial-avatar img {
+  transition: all 0.3s ease;
+}
+
+.testimonial-item:hover .testimonial-avatar img {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+/* Service item enhancements */
+.service-item {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.service-item:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.service-item:hover .service-icon {
+  transform: scale(1.1) rotate(5deg);
+  color: #ff6b35;
+}
+
+/* Loading animation for images */
+.about-image img,
+.testimonial-avatar img {
+  transition: all 0.5s ease;
+  opacity: 0;
+  animation: imageLoad 0.8s ease-out 0.5s forwards;
+}
+
+@keyframes imageLoad {
+  to {
+    opacity: 1;
+  }
+}
