@@ -175,11 +175,11 @@ function OurTeam() {
     return groups
   }, {})
 
-  // Sort groups by the role order
+  // Sort groups by the role order (descending - highest order first)
   const sortedRoleGroups = Object.entries(groupedMembers).sort(([, membersA], [, membersB]) => {
     const orderA = membersA[0]?.roles?.[0]?.order || 999
     const orderB = membersB[0]?.roles?.[0]?.order || 999
-    return orderA - orderB
+    return orderB - orderA
   })
 
   useEffect(() => {
@@ -369,46 +369,8 @@ function OurTeam() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
-              <h3>Tamil Pasanga VTC</h3>
-              <p>A premier virtual trucking company dedicated to bringing together Tamil-speaking trucking enthusiasts from around the world.</p>
-              <div className="social-links">
-                <a href="#" className="social-link">📱</a>
-                <a href="#" className="social-link">🎮</a>
-                <a href="#" className="social-link">📺</a>
-              </div>
-            </div>
-            <div className="footer-section">
-              <h4>Quick Links</h4>
-              <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About Us</Link></li>
-                <li><Link to="/our-team">Our Team</Link></li>
-                <li><Link to="/events">Events</Link></li>
-                <li><Link to="/rules">Rules</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h4>Community</h4>
-              <ul>
-                <li><a href="#">Join Discord</a></li>
-                <li><a href="#">TruckersMP Profile</a></li>
-                <li><a href="#">Steam Group</a></li>
-                <li><a href="#">Events Calendar</a></li>
-              </ul>
-            </div>
-            <div className="footer-section">
-              <h4>Contact Info</h4>
-              <p>Ready to join our trucking family?</p>
-              <p>📧 Contact us through our discord</p>
-              <p>🚛 Start your journey today</p>
-            </div>
-          </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 Tamil Pasanga VTC. All rights reserved.</p>
-            <p>Built with passion for the trucking community</p>
+            <p>&copy; 2025 Tamil Pasanga. All rights reserved.</p>
           </div>
         </div>
       </footer>
