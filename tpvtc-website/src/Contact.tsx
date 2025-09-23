@@ -9,11 +9,6 @@ gsap.registerPlugin(ScrollTrigger)
 function Contact() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
   
   // GSAP refs
   const navbarRef = useRef<HTMLDivElement>(null)
@@ -107,21 +102,6 @@ function Contact() {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
-    alert('Thank you for your message! We will get back to you soon.')
-    setFormData({ name: '', email: '', message: '' })
   }
 
   return (
