@@ -175,12 +175,14 @@ function OurTeam() {
     return groups
   }, {})
 
-  // Sort groups by the role order (descending - highest order first)
-  const sortedRoleGroups = Object.entries(groupedMembers).sort(([, membersA], [, membersB]) => {
-    const orderA = membersA[0]?.roles?.[0]?.order || 999
-    const orderB = membersB[0]?.roles?.[0]?.order || 999
-    return orderB - orderA
-  })
+  // Sort groups so 'Driver' is always last, others by descending order
+  const sortedRoleGroups = Object.entries(groupedMembers).sort(([roleA, membersA], [roleB, membersB]) => {
+    if (roleA.toLowerCase() === 'driver') return 1;
+    if (roleB.toLowerCase() === 'driver') return -1;
+    const orderA = membersA[0]?.roles?.[0]?.order || 999;
+    const orderB = membersB[0]?.roles?.[0]?.order || 999;
+    return orderB - orderA;
+  });
 
   useEffect(() => {
     if (teamMembers.length > 0 && sectionRef.current) {
