@@ -203,7 +203,7 @@ function Contact() {
               <div className="contact-info-item">
                 <h4>Discord Community</h4>
                 <p>Join our active Discord server for real-time communication, convoy announcements, and community discussions.</p>
-                <a href="https://discord.gg/tamilpasanga" target="_blank" rel="noopener noreferrer" className="contact-link">
+                <a href="https://discord.gg/S6uRJCn6uD" target="_blank" rel="noopener noreferrer" className="contact-link">
                   Join Discord Server
                 </a>
               </div>
