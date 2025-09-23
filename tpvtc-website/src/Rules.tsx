@@ -121,8 +121,7 @@ function Rules() {
         <div className="rules-nav-container">
           <div className="rules-nav-logo">
             <Link to="/">
-              <span className="rules-logo-part-1">Tamil Pasanga </span>
-              <span className="rules-logo-part-2">Logistics</span>
+              <span className="rules-logo-part-1">Tamil Pasanga</span>
             </Link>
           </div>
           
@@ -200,7 +199,7 @@ function Rules() {
       <section ref={sectionsRef} className="rules-content-section">
         <div className="rules-container">
           <div className="rules-section-label">COMPANY GUIDELINES</div>
-          <h2>Tamil Pasanga Logistics Rules & Regulations</h2>
+          <h2>Tamil Pasanga Rules & Regulations</h2>
           
           <div ref={rulesGridRef} className="rules-grid">
             <div className="rule-category">
@@ -239,7 +238,7 @@ function Rules() {
                 <li>Be active and participate in events</li>
                 <li>Help new members learn the ropes</li>
                 <li>Report any violations to management</li>
-                <li>Represent Tamil Pasanga Logistics with pride</li>
+                <li>Represent Tamil Pasanga with pride</li>
               </ul>
             </div>
           </div>
@@ -249,7 +248,7 @@ function Rules() {
       {/* Footer */}
       <footer className="rules-footer">
         <div className="rules-container">
-          <p>&copy; 2025 Tamil Pasanga Logistics. All rights reserved.</p>
+          <p>&copy; 2025 Tamil Pasanga. All rights reserved.</p>
         </div>
       </footer>
     </div>

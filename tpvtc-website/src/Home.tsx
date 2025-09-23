@@ -183,8 +183,7 @@ function Home() {
         <div className="nav-container">
           <div className="nav-logo">
             <Link to="/">
-              <span className="logo-part-1">Tamil Pasanga </span>
-              <span className="logo-part-2">Logistics</span>
+              <span className="logo-part-1">Tamil Pasanga</span>
             </Link>
           </div>
           
@@ -249,10 +248,10 @@ function Home() {
         <div className="hero-content">
           <div className="hero-center">
             <h1 ref={titleRef} className="hero-title">
-              <span className="hero-highlight">Welcome to TAMIL PASANGA LOGISTICS</span>
+              <span className="hero-highlight">Welcome to TAMIL PASANGA</span>
             </h1>
             <p ref={descriptionRef} className="hero-description">
-              Tamil Pasanga Logistics is a friendly and active Virtual Trucking Company built by Tamil gamers and truck enthusiasts who love driving together on TruckersMP. Our goal is to create a fun, realistic, and respectful community where players can enjoy convoys, explore Europe's roads, and represent Tamil unity on the trucking platform.
+              Tamil Pasanga is a friendly and active Virtual Trucking Company built by Tamil gamers and truck enthusiasts who love driving together on TruckersMP. Our goal is to create a fun, realistic, and respectful community where players can enjoy convoys, explore Europe's roads, and represent Tamil unity on the trucking platform.
             </p>
             <div ref={videoButtonRef} className="hero-video">
               <button 
@@ -273,7 +272,7 @@ function Home() {
         <div className="full-width-image-content">
           <div className="container">
             <div className="why-join-section">
-              <h2>Why Join Tamil Pasanga Logistics?</h2>
+              <h2>Why Join Tamil Pasanga?</h2>
               <p>
                 Experience the ultimate virtual trucking adventure with a community that values 
                 friendship, professionalism, and the thrill of the open road. Join hundreds of 
@@ -283,38 +282,32 @@ function Home() {
               <div className="benefits-grid">
                 <div className="benefit-item">
                   <span className="benefit-icon">🚛</span>
-                  <h3>Organized Convoys</h3>
-                  <p>Join weekly convoys with professional drivers across Europe's most scenic routes.</p>
+                  <h3>Regular Convoys</h3>
+                  <p>Weekly/monthly convoys across Europe & ProMods.</p>
                 </div>
                 
                 <div className="benefit-item">
-                  <span className="benefit-icon">🎯</span>
-                  <h3>Special Events</h3>
-                  <p>Participate in exclusive events, competitions, and seasonal celebrations.</p>
+                  <span className="benefit-icon">🤝</span>
+                  <h3>Friendly Community</h3>
+                  <p>A family-like atmosphere, always ready to help.</p>
                 </div>
                 
                 <div className="benefit-item">
-                  <span className="benefit-icon">👥</span>
-                  <h3>Active Community</h3>
-                  <p>Connect with friendly drivers, share experiences, and build lasting friendships.</p>
+                  <span className="benefit-icon">🛡️</span>
+                  <h3>Professional Standards</h3>
+                  <p>Realistic rules, safe convoys, and clean driving.</p>
                 </div>
                 
                 <div className="benefit-item">
-                  <span className="benefit-icon">🏆</span>
-                  <h3>Career Growth</h3>
-                  <p>Advance through our ranking system and earn recognition for your achievements.</p>
+                  <span className="benefit-icon">🏁</span>
+                  <h3>Cultural Unity</h3>
+                  <p>Representing Tamil pride and values globally.</p>
                 </div>
                 
                 <div className="benefit-item">
-                  <span className="benefit-icon">🎨</span>
-                  <h3>Custom Paint Jobs</h3>
-                  <p>Stand out with exclusive Logistics paint schemes and personalized truck designs.</p>
-                </div>
-                
-                <div className="benefit-item">
-                  <span className="benefit-icon">📱</span>
-                  <h3>24/7 Support</h3>
-                  <p>Get help anytime through our Discord community and dedicated support team.</p>
+                  <span className="benefit-icon">📅</span>
+                  <h3>Events & Partnerships</h3>
+                  <p>Join international VTC events and collaborations.</p>
                 </div>
               </div>
             </div>
@@ -345,7 +338,7 @@ function Home() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 Tamil Pasanga Logistics. All rights reserved.</p>
+          <p>&copy; 2025 Tamil Pasanga. All rights reserved.</p>
         </div>
       </footer>
     </div>

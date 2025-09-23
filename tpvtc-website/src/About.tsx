@@ -156,8 +156,7 @@ function About() {
         <div className="nav-container">
           <div className="nav-logo">
             <Link to="/">
-              <span className="logo-part-1">Tamil Pasanga </span>
-              <span className="logo-part-2">Logistics</span>
+              <span className="logo-part-1">Tamil Pasanga</span>
             </Link>
           </div>
           
@@ -239,23 +238,23 @@ function About() {
               <div className="section-label">ABOUT US</div>
               <h2>Tamil Pasanga Virtual Trucking Company</h2>
               <p>
-                Tamil Pasanga Logistics Is Virtual Trucking Company based around Euro Truck Simulator 2 and American Truck Simulator. It was Founded On 13 Aug 2024 To Bring People Together. It Was Founded By Powerful Gaming.
+                Tamil Pasanga Is Virtual Trucking Company based around Euro Truck Simulator 2 and American Truck Simulator. It was Founded On 13 Aug 2024 To Bring People Together. It Was Founded By Powerful Gaming.
               </p>
               <p>
                 Welcome to the Tamil Pasanga Virtual Trucking Community, where the open road meets endless opportunity! Immerse yourself in a world where innovation and camaraderie fuel the miles you'll conquer. Designed for trucking enthusiasts of all levels, our community provides an immersive experience that redefines virtual logistics—as you roll through breathtaking routes and engage in dynamic missions that transport you into the driver's seat.
               </p>
               <p>
-                Our community celebrates the spirit of trucking through a vibrant online platform, connecting players around the globe. Whether you're a seasoned veteran of the simulation or a newcomer eager to explore, Tamil Pasanga Logistics is your haven for sharing knowledge, logistics tips, and unforgettable trucking adventures. With a robust support system in place, members can tap into rich resources—from realistic trucking strategies to tech tutorials—ensuring everyone hits the road at their best.
+                Our community celebrates the spirit of trucking through a vibrant online platform, connecting players around the globe. Whether you're a seasoned veteran of the simulation or a newcomer eager to explore, Tamil Pasanga is your haven for sharing knowledge, logistics tips, and unforgettable trucking adventures. With a robust support system in place, members can tap into rich resources—from realistic trucking strategies to tech tutorials—ensuring everyone hits the road at their best.
               </p>
               <p>
-                At Tamil Pasanga Logistics, we believe that every mile matters. Our regularly-hosted events, convoy drives, and competitive challenges bring excitement and friendly rivalry to your experience, making your virtual journeys not just everyday missions, but memorable escapades. As part of our community, you'll join a family that thrives on the joy of the journey, celebrating milestones and achievements together.
+                At Tamil Pasanga, we believe that every mile matters. Our regularly-hosted events, convoy drives, and competitive challenges bring excitement and friendly rivalry to your experience, making your virtual journeys not just everyday missions, but memorable escapades. As part of our community, you'll join a family that thrives on the joy of the journey, celebrating milestones and achievements together.
               </p>
               <p>
                 Safety and respect are at the forefront of our ethos, fostering a welcoming environment for all members to enjoy their virtual trucking experience.
               </p>
             </div>
             <div className="about-image">
-              <img src="/src/assets/images/aboutus.PNG" alt="Tamil Pasanga Logistics About Us" />
+              <img src="/src/assets/images/aboutus.PNG" alt="Tamil Pasanga About Us" />
             </div>
           </div>
         </div>
@@ -264,42 +263,42 @@ function About() {
       {/* Our Services Section */}
      
 
-      {/* How it works Section */}
+      {/* Our Values Section */}
       <section ref={valuesRef} className="workflow-section">
         <div className="workflow-overlay"></div>
         <div className="container">
           <div className="section-header">
-            <div className="section-label">WORK FLOW</div>
-            <h2>How it works</h2>
+            <div className="section-label">OUR VALUES</div>
+            <h2>What We Stand For</h2>
           </div>
           <div className="workflow-grid">
             <div className="workflow-item">
               <div className="workflow-icon">
-                <span className="icon-circle">💵</span>
+                <span className="icon-circle">🚛</span>
               </div>
-              <h3>Pick Destination</h3>
-              <p>A small river named Duden flows by their place and supplies it with you</p>
+              <h3>Professional Driving</h3>
+              <p>Safe and realistic driving style.</p>
             </div>
             <div className="workflow-item">
               <div className="workflow-icon">
-                <span className="icon-circle">👆</span>
+                <span className="icon-circle">🤝</span>
               </div>
-              <h3>Select Term</h3>
-              <p>A small river named Duden flows by their place and supplies it with you</p>
+              <h3>Team Spirit</h3>
+              <p>Helping each other and staying united as a family.</p>
             </div>
             <div className="workflow-item">
               <div className="workflow-icon">
-                <span className="icon-circle">🚗</span>
+                <span className="icon-circle">🌍</span>
               </div>
-              <h3>Choose A Car</h3>
-              <p>A small river named Duden flows by their place and supplies it with you</p>
+              <h3>Community Vibes</h3>
+              <p>Open to all, but proud to represent Tamil culture worldwide.</p>
             </div>
             <div className="workflow-item">
               <div className="workflow-icon">
-                <span className="icon-circle">🎯</span>
+                <span className="icon-circle">📅</span>
               </div>
-              <h3>Enjoy The Ride</h3>
-              <p>A small river named Duden flows by their place and supplies it with you</p>
+              <h3>Convoys & Events</h3>
+              <p>Regular convoys, both public and private, ensuring everyone enjoys the journey.</p>
             </div>
           </div>
         </div>
@@ -366,7 +365,7 @@ function About() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>&copy; 2025 Tamil Pasanga Logistics. All rights reserved.</p>
+          <p>&copy; 2025 Tamil Pasanga. All rights reserved.</p>
         </div>
       </footer>
     </div>
