@@ -819,6 +819,10 @@
   color: white;
 }
 
+.statistics-section .section-header h2 {
+  color: white;
+}
+
 .statistics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
