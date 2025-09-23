@@ -165,7 +165,7 @@
 /* Page Header */
 .page-header {
   height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/hero-bg.PNG');
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/third-bg.PNG');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

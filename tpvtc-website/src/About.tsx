@@ -254,7 +254,7 @@ function About() {
               </p>
             </div>
             <div className="about-image">
-              <img src="/src/assets/images/aboutus.PNG" alt="Tamil Pasanga About Us" />
+              <img src="/images/aboutus.PNG" alt="Tamil Pasanga About Us" />
             </div>
           </div>
         </div>
