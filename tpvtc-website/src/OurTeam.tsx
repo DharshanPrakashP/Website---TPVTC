@@ -16,10 +16,20 @@ interface TeamMember {
     order: number
   }
   avatar?: string
-  joinDate: string
-}
-
-interface ApiResponse {
+  joinDate: stri                  <div className="team-info">
+                    <h3>{member.displayName || member.username || 'Unknown Member'}</h3>
+                    <p className="team-role">{member.role?.name || 'Member'}</p>
+                    <p className="team-description">
+                      {member.role?.name && member.role.name.toLowerCase().includes('founder') 
+                        ? "Visionary leader who founded Tamil Pasanga VTC to bring the Tamil trucking community together."
+                        : "Strategic partner ensuring smooth operations and community growth."
+                      }
+                    </p>
+                    <div className="team-stats">
+                      <span>👑 {member.role?.name || 'Member'}</span>
+                      <span>📅 Since {member.joinDate ? new Date(member.joinDate).getFullYear() : '2024'}</span>
+                    </div>
+                  </div>face ApiResponse {
   response: {
     members: TeamMember[]
     pagination: {
@@ -282,14 +292,19 @@ function OurTeam() {
   }
 
   // Helper function to categorize roles
-  const isManagementRole = (roleName: string) => {
+  const isManagementRole = (roleName: string | undefined) => {
+    if (!roleName || typeof roleName !== 'string') return false
     const managementRoles = ['founder', 'ceo', 'co-owner', 'owner', 'director', 'manager']
     return managementRoles.some(role => roleName.toLowerCase().includes(role))
   }
 
   // Filter members by role category
-  const managementMembers = teamMembers.filter(member => isManagementRole(member.role.name))
-  const staffMembers = teamMembers.filter(member => !isManagementRole(member.role.name))
+  const managementMembers = teamMembers.filter(member => 
+    member && member.role && member.role.name && isManagementRole(member.role.name)
+  )
+  const staffMembers = teamMembers.filter(member => 
+    member && member.role && member.role.name && !isManagementRole(member.role.name)
+  )
 
   return (
     <div className="OurTeam">
@@ -467,19 +482,19 @@ function OurTeam() {
                     )}
                   </div>
                   <div className="team-info">
-                    <h3>{member.displayName || member.username}</h3>
-                    <p className="team-role">{member.role.name}</p>
+                    <h3>{member.displayName || member.username || 'Unknown Member'}</h3>
+                    <p className="team-role">{member.role?.name || 'Member'}</p>
                     <p className="team-description">
-                      {member.role.name.toLowerCase().includes('moderator') 
+                      {member.role?.name && member.role.name.toLowerCase().includes('moderator') 
                         ? "Ensuring community guidelines and helping members with their queries."
-                        : member.role.name.toLowerCase().includes('event')
+                        : member.role?.name && member.role.name.toLowerCase().includes('event')
                         ? "Organizing and managing all convoys and community events."
                         : "Contributing to the growth and success of our virtual trucking community."
                       }
                     </p>
                     <div className="team-stats">
-                      <span>🎖️ {member.role.name}</span>
-                      <span>📅 Since {new Date(member.joinDate).getFullYear()}</span>
+                      <span>🎖️ {member.role?.name || 'Member'}</span>
+                      <span>📅 Since {member.joinDate ? new Date(member.joinDate).getFullYear() : '2024'}</span>
                     </div>
                   </div>
                 </div>
