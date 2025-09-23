@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -33,113 +33,37 @@ interface ApiResponse {
   error: boolean
   response: {
     members: TeamMember[]
-    pagination?: {
-      current: number
-      count: number
-      total: number
-    }
-  }
-}
-
-interface EnhancedTeamMember extends Omit<TeamMember, 'role'> {
-  roleData: Role
-  displayName?: string
-  avatar?: string
-}
-
-interface RolesApiResponse {
-  error: boolean
-  response: {
-    roles: Role[]
+    members_count: number
   }
 }
 
 function OurTeam() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [teamMembers, setTeamMembers] = useState<EnhancedTeamMember[]>([])
-  const [roles, setRoles] = useState<Role[]>([])
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  
-  // GSAP refs
-  const navbarRef = useRef<HTMLDivElement>(null)
-  const breadcrumbRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const sectionsRef = useRef<HTMLDivElement>(null)
-  const teamGridRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollTop = window.scrollY
-      setIsScrolled(scrollTop > 100)
+      setIsScrolled(window.scrollY > 50)
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-    // Function to fetch team roles
-  const fetchTeamRoles = async (): Promise<Role[]> => {
-    const apiUrls = [
-      '/.netlify/functions/team-roles',
-      'https://corsproxy.io/?url=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/roles'),
-      'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/roles'),
-      'https://api.truckersmp.com/v2/vtc/73933/roles'
-    ]
-
-    for (const url of apiUrls) {
-      try {
-        console.log(`Attempting to fetch roles from: ${url}`)
-        
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-        })
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const responseData = await response.json()
-        
-        let data: RolesApiResponse
-        
-        if (url.includes('corsproxy.io') || url.includes('codetabs.com')) {
-          data = responseData
-        } else {
-          data = responseData
-        }
-
-        if (data && data.response && data.response.roles) {
-          console.log('Successfully fetched roles from:', url)
-          return data.response.roles
-        }
-      } catch (error) {
-        console.error(`Failed to fetch roles from ${url}:`, error)
-        continue
-      }
-    }
-    
-    throw new Error('Failed to fetch roles from all sources')
-  }
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
         setLoading(true)
         
-        // Try multiple approaches to fetch data
         const apiUrls = [
-          // Netlify function (best option for production)
           '/.netlify/functions/team-members',
-          // CORS proxy alternatives (more reliable)
           'https://corsproxy.io/?url=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/members'),
           'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/members'),
           'https://thingproxy.freeboard.io/fetch/' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/members'),
-          // Direct API call (might work in some environments)
           'https://api.truckersmp.com/v2/vtc/73933/members'
         ]
         
@@ -163,87 +87,34 @@ function OurTeam() {
             }
             
             const responseData = await response.json()
+            data = responseData
             
-            // Handle different proxy response formats
-            if (url.includes('allorigins')) {
-              if (responseData.contents) {
-                data = JSON.parse(responseData.contents)
-              } else {
-                throw new Error('Invalid AllOrigins response')
-              }
-            } else if (url.includes('corsproxy.io') || url.includes('codetabs.com') || url.includes('thingproxy')) {
-              // These proxies return the data directly
-              data = responseData
-            } else {
-              // Direct API call or Netlify function
-              data = responseData
-            }
-            
-            // If we got valid data, break the loop
             if (data && data.response && data.response.members) {
               console.log('Successfully fetched data from:', url)
               break
             }
             
           } catch (err) {
-            console.log(`Failed to fetch from ${url}:`, err)
-            lastError = err as Error
+            console.error(`Failed to fetch from ${url}:`, err)
+            lastError = err instanceof Error ? err : new Error('Unknown error')
             continue
           }
         }
         
         if (data && data.response && data.response.members) {
-          // Sort members by role order (management first)
-          const sortedMembers = data.response.members.sort((a, b) => a.role.order - b.role.order)
+          // Sort members by role order (from the roles array in each member)
+          const sortedMembers = data.response.members.sort((a, b) => {
+            const aOrder = a.roles?.[0]?.order || 999
+            const bOrder = b.roles?.[0]?.order || 999
+            return aOrder - bOrder
+          })
           setTeamMembers(sortedMembers)
-          setError(null)
-          console.log(`Loaded ${sortedMembers.length} team members`)
         } else {
-          throw lastError || new Error('No valid data received from any API endpoint')
+          setError(lastError?.message || 'Failed to fetch team members')
         }
-        
       } catch (err) {
         console.error('Error fetching team members:', err)
-        setError('Unable to load live team data. Showing static information.')
-        
-        // Enhanced fallback data with more realistic information
-        setTeamMembers([
-          {
-            id: 1,
-            username: "PowerfulGaming",
-            displayName: "Powerful Gaming",
-            role: { id: 1, name: "Founder & CEO", order: 1 },
-            joinDate: "2024-08-13"
-          },
-          {
-            id: 2,
-            username: "CoOwner",
-            displayName: "Co-Owner",
-            role: { id: 2, name: "Co-Founder", order: 2 },
-            joinDate: "2024-08-13"
-          },
-          {
-            id: 3,
-            username: "SeniorMod",
-            displayName: "Senior Moderator",
-            role: { id: 3, name: "Senior Moderator", order: 3 },
-            joinDate: "2024-08-20"
-          },
-          {
-            id: 4,
-            username: "EventManager",
-            displayName: "Event Manager",
-            role: { id: 4, name: "Event Coordinator", order: 4 },
-            joinDate: "2024-09-01"
-          },
-          {
-            id: 5,
-            username: "TechSupport",
-            displayName: "Tech Support",
-            role: { id: 5, name: "Technical Support", order: 5 },
-            joinDate: "2024-09-10"
-          }
-        ])
+        setError(err instanceof Error ? err.message : 'An unknown error occurred')
       } finally {
         setLoading(false)
       }
@@ -252,299 +123,201 @@ function OurTeam() {
     fetchTeamMembers()
   }, [])
 
-  // GSAP animations
-  useEffect(() => {
-    if (navbarRef.current && breadcrumbRef.current && titleRef.current) {
-      const tl = gsap.timeline()
-      
-      // Main hero timeline
-      tl.fromTo(navbarRef.current, 
-        { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
-      )
-      .fromTo(breadcrumbRef.current,
-        { x: -50, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
-        "-=0.4"
-      )
-      .fromTo(titleRef.current,
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-        "-=0.3"
-      )
+  // Group members by their role
+  const groupedMembers = teamMembers.reduce((groups: { [key: string]: TeamMember[] }, member) => {
+    const roleName = member.role || 'Unknown'
+    if (!groups[roleName]) {
+      groups[roleName] = []
     }
+    groups[roleName].push(member)
+    return groups
+  }, {})
 
-    // Animate team grid on scroll
-    if (teamGridRef.current) {
-      const teamCards = teamGridRef.current.querySelectorAll('.team-member')
+  // Sort groups by the role order
+  const sortedRoleGroups = Object.entries(groupedMembers).sort(([, membersA], [, membersB]) => {
+    const orderA = membersA[0]?.roles?.[0]?.order || 999
+    const orderB = membersB[0]?.roles?.[0]?.order || 999
+    return orderA - orderB
+  })
+
+  useEffect(() => {
+    if (teamMembers.length > 0 && sectionRef.current) {
+      const cards = sectionRef.current.querySelectorAll('.team-member-card')
       
-      gsap.fromTo(teamCards,
-        { y: 60, opacity: 0, scale: 0.9 },
+      gsap.fromTo(cards, 
+        { 
+          opacity: 0, 
+          y: 50,
+          scale: 0.9
+        },
         {
-          y: 0,
           opacity: 1,
+          y: 0,
           scale: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "back.out(1.2)",
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power2.out",
           scrollTrigger: {
-            trigger: teamGridRef.current,
+            trigger: sectionRef.current,
             start: "top 80%",
+            end: "bottom 20%",
             toggleActions: "play none none reverse"
           }
         }
       )
-      
-      // Add hover animations for team cards
-      teamCards.forEach((card: any) => {
-        card.addEventListener('mouseenter', () => {
-          gsap.to(card, { scale: 1.05, duration: 0.3, ease: "power2.out" })
-        })
-        card.addEventListener('mouseleave', () => {
-          gsap.to(card, { scale: 1, duration: 0.3, ease: "power2.out" })
-        })
-      })
     }
-
-    // Animate section labels and headings
-    if (sectionsRef.current) {
-      const sectionLabel = sectionsRef.current.querySelector('.team-section-label')
-      const sectionHeading = sectionsRef.current.querySelector('h2')
-      
-      if (sectionLabel && sectionHeading) {
-        gsap.fromTo([sectionLabel, sectionHeading],
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            stagger: 0.2,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: sectionsRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        )
-      }
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-    }
-  }, [])
+  }, [teamMembers])
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
-  // Helper function to get avatar initials
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(word => word.charAt(0))
-      .join('')
-      .toUpperCase()
-      .substring(0, 2)
+  const openUserProfile = (userId: number) => {
+    alert(`User ID: ${userId}`)
   }
 
-  // Group members by their roles
-  const groupedMembers = useMemo(() => {
-    const groups: { [key: string]: typeof teamMembers } = {}
-    
-    teamMembers.forEach(member => {
-      if (member && member.roleData && member.roleData.name) {
-        const roleName = member.roleData.name
-        if (!groups[roleName]) {
-          groups[roleName] = []
-        }
-        groups[roleName].push(member)
-      }
-    })
-    
-    // Sort groups by role order (lowest order first)
-    const sortedGroups = Object.entries(groups).sort(([, membersA], [, membersB]) => {
-      const orderA = membersA[0]?.roleData?.order || 999
-      const orderB = membersB[0]?.roleData?.order || 999
-      return orderA - orderB
-    })
-    
-    return sortedGroups
-  }, [teamMembers])
-
   return (
-    <div className="OurTeam">
+    <div className="our-team">
       {/* Navigation */}
-      <nav ref={navbarRef} className={`team-navbar ${isScrolled ? 'scrolled' : ''}`}>
-        <div className="team-nav-container">
-          <div className="team-nav-logo">
-            <Link to="/">
-              <span className="team-logo-part-1">Tamil Pasanga</span>
+      <nav className={`nav ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="nav-container">
+          <Link to="/" className="nav-logo">
+            <img src="/TP_NEW_WB_PNGxxxhdpi.png" alt="Tamil Pasanga VTC" />
+          </Link>
+          <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+            <Link to="/" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
+              Home
+            </Link>
+            <Link to="/about" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
+              About
+            </Link>
+            <Link to="/our-team" className="nav-link active" onClick={() => setIsMobileMenuOpen(false)}>
+              Our Team
+            </Link>
+            <Link to="/events" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
+              Events
+            </Link>
+            <Link to="/rules" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
+              Rules
+            </Link>
+            <Link to="/contact" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
+              Contact
             </Link>
           </div>
-          
-          {/* Desktop Menu */}
-          <ul className="team-nav-menu">
-            <li className="team-nav-item">
-              <Link to="/" className="team-nav-link">Home</Link>
-            </li>
-            <li className="team-nav-item">
-              <Link to="/about" className="team-nav-link">About</Link>
-            </li>
-            <li className="team-nav-item">
-              <Link to="/rules" className="team-nav-link">Rules</Link>
-            </li>
-            <li className="team-nav-item">
-              <Link to="/events" className="team-nav-link">Events</Link>
-            </li>
-            <li className="team-nav-item">
-              <Link to="/team" className="team-nav-link active">Our Team</Link>
-            </li>
-            <li className="team-nav-item">
-              <a href="#gallery" className="team-nav-link">Gallery</a>
-            </li>
-            <li className="team-nav-item">
-              <Link to="/contact" className="team-nav-link">Contact</Link>
-            </li>
-          </ul>
-
-          {/* Mobile Menu Button */}
-          <button 
-            className="team-mobile-menu-button"
-            onClick={toggleMobileMenu}
-            aria-label="Toggle mobile menu"
-          >
-            <span className={`team-hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
-          </button>
-
-          {/* Mobile Menu */}
-          <div className={`team-mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-            <ul className="team-mobile-nav-menu">
-              <li className="team-mobile-nav-item">
-                <Link to="/" className="team-mobile-nav-link" onClick={toggleMobileMenu}>Home</Link>
-              </li>
-              <li className="team-mobile-nav-item">
-                <Link to="/about" className="team-mobile-nav-link" onClick={toggleMobileMenu}>About</Link>
-              </li>
-              <li className="team-mobile-nav-item">
-                <Link to="/rules" className="team-mobile-nav-link" onClick={toggleMobileMenu}>Rules</Link>
-              </li>
-              <li className="team-mobile-nav-item">
-                <Link to="/events" className="team-mobile-nav-link" onClick={toggleMobileMenu}>Events</Link>
-              </li>
-              <li className="team-mobile-nav-item">
-                <Link to="/team" className="team-mobile-nav-link active" onClick={toggleMobileMenu}>Our Team</Link>
-              </li>
-              <li className="team-mobile-nav-item">
-                <a href="#gallery" className="team-mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
-              </li>
-              <li className="team-mobile-nav-item">
-                <Link to="/contact" className="team-mobile-nav-link" onClick={toggleMobileMenu}>Contact</Link>
-              </li>
-            </ul>
+          <div className="nav-toggle" onClick={toggleMobileMenu}>
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
           </div>
         </div>
       </nav>
 
-      {/* Team Page Header */}
-      <section className="team-page-header">
-        <div className="team-page-header-content">
-          <div ref={breadcrumbRef} className="team-breadcrumb">
-            <Link to="/">HOME</Link>
-            <span className="team-separator"> / </span>
-            <span className="team-current">OUR TEAM</span>
-          </div>
-          <h1 ref={titleRef} className="team-page-title">
-            <span className="team-title-accent"></span>
-            OUR TEAM
-          </h1>
+      {/* Hero Section */}
+      <section className="team-hero">
+        <div className="hero-content">
+          <h1>Our Team</h1>
+          <p>Meet the dedicated members who make Tamil Pasanga VTC a thriving community</p>
         </div>
       </section>
 
-      {/* Team Content Section */}
-      <section ref={sectionsRef} className="team-content-section">
-        <div className="team-container">
-          <div className="team-section-label">MEET THE CREW</div>
-          <h2>Tamil Pasanga Team Members</h2>
-          
+      {/* Team Members Section */}
+      <section className="team-section" ref={sectionRef}>
+        <div className="container">
           {loading && (
-            <div className="team-loading-message">
+            <div className="loading-state">
+              <div className="spinner"></div>
               <p>Loading team members...</p>
             </div>
           )}
-          
+
           {error && (
-            <div className="team-error-message">
-              <p>⚠️ {error}</p>
+            <div className="error-state">
+              <p>Error: {error}</p>
+              <p>Showing offline data for demonstration.</p>
             </div>
           )}
-          
-          <div ref={teamGridRef} className="team-grid">
-            {/* Dynamically render groups by roles */}
-            {groupedMembers.map(([roleName, members]) => (
-              <div key={roleName} className="team-role-section">
-                <div className="team-category-header">
-                  <h3>{roleName}</h3>
+
+          {!loading && teamMembers.length > 0 && (
+            <>
+              <div className="team-stats">
+                <div className="stat">
+                  <span className="stat-number">{teamMembers.length}</span>
+                  <span className="stat-label">Total Members</span>
                 </div>
-                {members.map((member) => (
-                  <div key={member.id} className="team-member">
-                    <div className="team-avatar">
-                      <div className="avatar-placeholder">
-                        {getInitials(member.username)}
+                <div className="stat">
+                  <span className="stat-number">{sortedRoleGroups.length}</span>
+                  <span className="stat-label">Different Roles</span>
+                </div>
+              </div>
+
+              {sortedRoleGroups.map(([roleName, members]) => (
+                <div key={roleName} className="role-section">
+                  <h2 className="team-category-header">{roleName}</h2>
+                  <div className="team-grid">
+                    {members.map((member) => (
+                      <div key={member.id} className="team-member-card">
+                        <div className="member-avatar">
+                          <div className="avatar-placeholder">
+                            {member.username.charAt(0).toUpperCase()}
+                          </div>
+                        </div>
+                        <div className="member-info">
+                          <h3 className="member-name">{member.username}</h3>
+                          <p className="team-role">{member.role}</p>
+                          <div className="member-badges">
+                            {member.role.toLowerCase().includes('managing director') && (
+                              <span className="badge leadership">👑 Leadership</span>
+                            )}
+                            {member.role.toLowerCase().includes('staff') && (
+                              <span className="badge staff">🛡️ Staff</span>
+                            )}
+                            {member.role.toLowerCase().includes('event') && (
+                              <span className="badge event">🎉 Events</span>
+                            )}
+                          </div>
+                          <button 
+                            className="user-profile-btn"
+                            onClick={() => openUserProfile(member.user_id)}
+                            title="View User Profile"
+                          >
+                            Open Profile
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div className="team-info">
-                      <h4>{member.username}</h4>
-                      <p className="team-role">{member.roleData.name}</p>
-                      <p className="team-description">
-                        {member.role.name.toLowerCase().includes('founder') || member.role.name.toLowerCase().includes('managing director') 
-                          ? "Visionary leader guiding Tamil Pasanga VTC to bring the Tamil trucking community together."
-                          : member.role.name.toLowerCase().includes('moderator') 
-                          ? "Ensuring community guidelines and helping members with their queries."
-                          : member.role.name.toLowerCase().includes('event')
-                          ? "Organizing and managing all convoys and community events."
-                          : "Contributing to the growth and success of our virtual trucking community."
-                        }
-                      </p>
-                      <div className="team-stats">
-                        <span>🎖️ {member.role.name}</span>
-                        <span>📅 Since {new Date(member.joinDate).getFullYear()}</span>
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            ))}
-            
-            {/* Fallback when no data */}
-            {!loading && !error && teamMembers.length === 0 && (
-              <div className="team-member">
-                <div className="team-info">
-                  <h4>No team data available</h4>
-                  <p className="team-description">Team information will be loaded from TruckersMP API.</p>
                 </div>
-              </div>
-            )}
-          </div>
-          
-          {!loading && !error && teamMembers.length > 0 && (
-            <div className="team-view-all">
-              <p className="team-total">Total VTC Members: {teamMembers.length}</p>
-              <p>Members grouped by roles: {groupedMembers.length} different roles</p>
-            </div>
+              ))}
+            </>
           )}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="team-footer">
-        <div className="team-container">
-          <p>&copy; 2025 Tamil Pasanga. All rights reserved.</p>
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-content">
+            <div className="footer-section">
+              <h3>Tamil Pasanga VTC</h3>
+              <p>A premier virtual trucking company dedicated to bringing together Tamil-speaking trucking enthusiasts from around the world.</p>
+            </div>
+            <div className="footer-section">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/about">About</Link></li>
+                <li><Link to="/our-team">Our Team</Link></li>
+                <li><Link to="/events">Events</Link></li>
+              </ul>
+            </div>
+            <div className="footer-section">
+              <h4>Contact</h4>
+              <p>Join our community and start your trucking journey with us!</p>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2024 Tamil Pasanga VTC. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>
