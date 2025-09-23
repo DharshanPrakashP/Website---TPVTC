@@ -282,6 +282,15 @@
   margin-bottom: 20px;
 }
 
+.team-role-section {
+  grid-column: 1 / -1;
+  display: contents; /* This allows the children to participate in the parent grid */
+}
+
+.team-role-section:first-child .team-category-header {
+  margin-top: 0; /* Remove top margin for the first role section */
+}
+
 .team-category-header h3 {
   font-size: 2rem;
   color: #ff6b35;

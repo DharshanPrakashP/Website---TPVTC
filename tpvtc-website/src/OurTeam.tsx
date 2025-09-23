@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -278,20 +278,29 @@ function OurTeam() {
       .substring(0, 2)
   }
 
-  // Helper function to categorize roles
-  const isManagementRole = (roleName: string | undefined) => {
-    if (!roleName || typeof roleName !== 'string') return false
-    const managementRoles = ['founder', 'ceo', 'co-owner', 'owner', 'director', 'manager']
-    return managementRoles.some(role => roleName.toLowerCase().includes(role))
-  }
-
-  // Filter members by role category
-  const managementMembers = teamMembers.filter(member => 
-    member && member.role && member.role.name && isManagementRole(member.role.name)
-  )
-  const staffMembers = teamMembers.filter(member => 
-    member && member.role && member.role.name && !isManagementRole(member.role.name)
-  )
+  // Group members by their roles
+  const groupedMembers = useMemo(() => {
+    const groups: { [key: string]: typeof teamMembers } = {}
+    
+    teamMembers.forEach(member => {
+      if (member && member.role && member.role.name) {
+        const roleName = member.role.name
+        if (!groups[roleName]) {
+          groups[roleName] = []
+        }
+        groups[roleName].push(member)
+      }
+    })
+    
+    // Sort groups by role order (lowest order first)
+    const sortedGroups = Object.entries(groups).sort(([, membersA], [, membersB]) => {
+      const orderA = membersA[0]?.role?.order || 999
+      const orderB = membersB[0]?.role?.order || 999
+      return orderA - orderB
+    })
+    
+    return sortedGroups
+  }, [teamMembers])
 
   return (
     <div className="OurTeam">
@@ -405,13 +414,13 @@ function OurTeam() {
           )}
           
           <div ref={teamGridRef} className="team-grid">
-            {/* Management Team */}
-            {managementMembers.length > 0 && (
-              <>
+            {/* Dynamically render groups by roles */}
+            {groupedMembers.map(([roleName, members]) => (
+              <div key={roleName} className="team-role-section">
                 <div className="team-category-header">
-                  <h3>Leadership Team</h3>
+                  <h3>{roleName}</h3>
                 </div>
-                {managementMembers.map((member) => (
+                {members.map((member) => (
                   <div key={member.id} className="team-member">
                     <div className="team-avatar">
                       {member.avatar ? (
@@ -426,43 +435,9 @@ function OurTeam() {
                       <h4>{member.displayName || member.username}</h4>
                       <p className="team-role">{member.role.name}</p>
                       <p className="team-description">
-                        {member.role.name.toLowerCase().includes('founder') 
-                          ? "Visionary leader who founded Tamil Pasanga VTC to bring the Tamil trucking community together."
-                          : "Strategic partner ensuring smooth operations and community growth."
-                        }
-                      </p>
-                      <div className="team-stats">
-                        <span>👑 {member.role.name}</span>
-                        <span>📅 Since {new Date(member.joinDate).getFullYear()}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </>
-            )}
-            
-            {/* Staff Members */}
-            {staffMembers.length > 0 && (
-              <>
-                <div className="team-category-header">
-                  <h3>Staff & Members</h3>
-                </div>
-                {staffMembers.slice(0, 8).map((member) => (
-                  <div key={member.id} className="team-member">
-                    <div className="team-avatar">
-                      {member.avatar ? (
-                        <img src={member.avatar} alt={member.displayName || member.username} />
-                      ) : (
-                        <div className="avatar-placeholder">
-                          {getInitials(member.displayName || member.username)}
-                        </div>
-                      )}
-                    </div>
-                    <div className="team-info">
-                      <h4>{member.displayName || member.username}</h4>
-                      <p className="team-role">{member.role.name}</p>
-                      <p className="team-description">
-                        {member.role.name.toLowerCase().includes('moderator') 
+                        {member.role.name.toLowerCase().includes('founder') || member.role.name.toLowerCase().includes('managing director') 
+                          ? "Visionary leader guiding Tamil Pasanga VTC to bring the Tamil trucking community together."
+                          : member.role.name.toLowerCase().includes('moderator') 
                           ? "Ensuring community guidelines and helping members with their queries."
                           : member.role.name.toLowerCase().includes('event')
                           ? "Organizing and managing all convoys and community events."
@@ -476,8 +451,8 @@ function OurTeam() {
                     </div>
                   </div>
                 ))}
-              </>
-            )}
+              </div>
+            ))}
             
             {/* Fallback when no data */}
             {!loading && !error && teamMembers.length === 0 && (
@@ -490,10 +465,10 @@ function OurTeam() {
             )}
           </div>
           
-          {!loading && !error && staffMembers.length > 8 && (
+          {!loading && !error && teamMembers.length > 0 && (
             <div className="team-view-all">
-              <p>Showing 8 of {staffMembers.length} staff members</p>
               <p className="team-total">Total VTC Members: {teamMembers.length}</p>
+              <p>Members grouped by roles: {groupedMembers.length} different roles</p>
             </div>
           )}
         </div>
