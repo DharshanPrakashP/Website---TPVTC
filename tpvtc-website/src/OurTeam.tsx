@@ -6,9 +6,36 @@ import './OurTeam.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+interface TeamMember {
+  id: number
+  username: string
+  displayName?: string
+  role: {
+    id: number
+    name: string
+    order: number
+  }
+  avatar?: string
+  joinDate: string
+}
+
+interface ApiResponse {
+  response: {
+    members: TeamMember[]
+    pagination: {
+      current: number
+      count: number
+      total: number
+    }
+  }
+}
+
 function OurTeam() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   
   // GSAP refs
   const navbarRef = useRef<HTMLElement>(null)
@@ -25,6 +52,127 @@ function OurTeam() {
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Fetch team members from TruckersMP API
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        setLoading(true)
+        
+        // Try multiple approaches to fetch data
+        const apiUrls = [
+          // Netlify function (best option for production)
+          '/.netlify/functions/team-members',
+          // Direct API call (might work in some environments)
+          'https://api.truckersmp.com/v2/vtc/73933/members',
+          // CORS proxy alternatives
+          'https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/members')
+        ]
+        
+        let data: ApiResponse | null = null
+        let lastError: Error | null = null
+        
+        for (const url of apiUrls) {
+          try {
+            console.log(`Attempting to fetch from: ${url}`)
+            
+            const response = await fetch(url, {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+            })
+            
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`)
+            }
+            
+            const responseData = await response.json()
+            
+            // Handle AllOrigins proxy response format
+            if (url.includes('allorigins')) {
+              if (responseData.contents) {
+                data = JSON.parse(responseData.contents)
+              } else {
+                throw new Error('Invalid AllOrigins response')
+              }
+            } else {
+              data = responseData
+            }
+            
+            // If we got valid data, break the loop
+            if (data && data.response && data.response.members) {
+              console.log('Successfully fetched data from:', url)
+              break
+            }
+            
+          } catch (err) {
+            console.log(`Failed to fetch from ${url}:`, err)
+            lastError = err as Error
+            continue
+          }
+        }
+        
+        if (data && data.response && data.response.members) {
+          // Sort members by role order (management first)
+          const sortedMembers = data.response.members.sort((a, b) => a.role.order - b.role.order)
+          setTeamMembers(sortedMembers)
+          setError(null)
+          console.log(`Loaded ${sortedMembers.length} team members`)
+        } else {
+          throw lastError || new Error('No valid data received from any API endpoint')
+        }
+        
+      } catch (err) {
+        console.error('Error fetching team members:', err)
+        setError('Unable to load live team data. Showing static information.')
+        
+        // Enhanced fallback data with more realistic information
+        setTeamMembers([
+          {
+            id: 1,
+            username: "PowerfulGaming",
+            displayName: "Powerful Gaming",
+            role: { id: 1, name: "Founder & CEO", order: 1 },
+            joinDate: "2024-08-13"
+          },
+          {
+            id: 2,
+            username: "CoOwner",
+            displayName: "Co-Owner",
+            role: { id: 2, name: "Co-Founder", order: 2 },
+            joinDate: "2024-08-13"
+          },
+          {
+            id: 3,
+            username: "SeniorMod",
+            displayName: "Senior Moderator",
+            role: { id: 3, name: "Senior Moderator", order: 3 },
+            joinDate: "2024-08-20"
+          },
+          {
+            id: 4,
+            username: "EventManager",
+            displayName: "Event Manager",
+            role: { id: 4, name: "Event Coordinator", order: 4 },
+            joinDate: "2024-09-01"
+          },
+          {
+            id: 5,
+            username: "TechSupport",
+            displayName: "Tech Support",
+            role: { id: 5, name: "Technical Support", order: 5 },
+            joinDate: "2024-09-10"
+          }
+        ])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchTeamMembers()
   }, [])
 
   // GSAP animations
@@ -122,6 +270,26 @@ function OurTeam() {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
+
+  // Helper function to get avatar initials
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .substring(0, 2)
+  }
+
+  // Helper function to categorize roles
+  const isManagementRole = (roleName: string) => {
+    const managementRoles = ['founder', 'ceo', 'co-owner', 'owner', 'director', 'manager']
+    return managementRoles.some(role => roleName.toLowerCase().includes(role))
+  }
+
+  // Filter members by role category
+  const managementMembers = teamMembers.filter(member => isManagementRole(member.role.name))
+  const staffMembers = teamMembers.filter(member => !isManagementRole(member.role.name))
 
   return (
     <div className="OurTeam">
@@ -223,101 +391,114 @@ function OurTeam() {
             <div className="section-label">LEADERSHIP</div>
             <h2>Management Team</h2>
           </div>
-          <div className="team-grid">
-            <div className="team-card">
-              <div className="team-avatar">
-                <div className="avatar-placeholder">PG</div>
-              </div>
-              <div className="team-info">
-                <h3>Powerful Gaming</h3>
-                <p className="team-role">Founder & CEO</p>
-                <p className="team-description">Visionary leader who founded Tamil Pasanga VTC to bring the Tamil trucking community together.</p>
-                <div className="team-stats">
-                  <span>👑 Founder</span>
-                  <span>🚛 Expert Driver</span>
-                </div>
-              </div>
+          
+          {loading && (
+            <div className="loading-message">
+              <p>Loading team members...</p>
             </div>
-            <div className="team-card">
-              <div className="team-avatar">
-                <div className="avatar-placeholder">CO</div>
-              </div>
-              <div className="team-info">
-                <h3>Co-Owner</h3>
-                <p className="team-role">Co-Founder & Operations</p>
-                <p className="team-description">Strategic partner ensuring smooth operations and community growth.</p>
-                <div className="team-stats">
-                  <span>⚙️ Operations</span>
-                  <span>📈 Growth</span>
-                </div>
-              </div>
+          )}
+          
+          {error && (
+            <div className="error-message">
+              <p>⚠️ {error}</p>
+              <p className="error-subtitle">Live data will be available when deployed to production.</p>
             </div>
-          </div>
+          )}
+          
+          {!loading && !error && managementMembers.length > 0 && (
+            <div className="team-grid">
+              {managementMembers.map((member) => (
+                <div key={member.id} className="team-card">
+                  <div className="team-avatar">
+                    {member.avatar ? (
+                      <img src={member.avatar} alt={member.displayName || member.username} />
+                    ) : (
+                      <div className="avatar-placeholder">
+                        {getInitials(member.displayName || member.username)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="team-info">
+                    <h3>{member.displayName || member.username}</h3>
+                    <p className="team-role">{member.role.name}</p>
+                    <p className="team-description">
+                      {member.role.name.toLowerCase().includes('founder') 
+                        ? "Visionary leader who founded Tamil Pasanga VTC to bring the Tamil trucking community together."
+                        : "Strategic partner ensuring smooth operations and community growth."
+                      }
+                    </p>
+                    <div className="team-stats">
+                      <span>👑 {member.role.name}</span>
+                      <span>� Since {new Date(member.joinDate).getFullYear()}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          {!loading && !error && managementMembers.length === 0 && (
+            <div className="no-members-message">
+              <p>No management team members found.</p>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Moderators Section */}
+      {/* Staff & Moderators Section */}
       <section ref={moderatorsRef} className="moderators-section">
         <div className="container">
           <div className="section-header">
             <div className="section-label">SUPPORT TEAM</div>
-            <h2>Moderators & Staff</h2>
+            <h2>Staff & Members</h2>
           </div>
-          <div className="team-grid">
-            <div className="team-card">
-              <div className="team-avatar">
-                <div className="avatar-placeholder">M1</div>
-              </div>
-              <div className="team-info">
-                <h3>Senior Moderator</h3>
-                <p className="team-role">Community Manager</p>
-                <p className="team-description">Ensuring community guidelines and helping members with their queries.</p>
-                <div className="team-stats">
-                  <span>🛡️ Moderator</span>
-                  <span>🤝 Community</span>
+          
+          {!loading && !error && staffMembers.length > 0 && (
+            <div className="team-grid">
+              {staffMembers.slice(0, 9).map((member) => (
+                <div key={member.id} className="team-card">
+                  <div className="team-avatar">
+                    {member.avatar ? (
+                      <img src={member.avatar} alt={member.displayName || member.username} />
+                    ) : (
+                      <div className="avatar-placeholder">
+                        {getInitials(member.displayName || member.username)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="team-info">
+                    <h3>{member.displayName || member.username}</h3>
+                    <p className="team-role">{member.role.name}</p>
+                    <p className="team-description">
+                      {member.role.name.toLowerCase().includes('moderator') 
+                        ? "Ensuring community guidelines and helping members with their queries."
+                        : member.role.name.toLowerCase().includes('event')
+                        ? "Organizing and managing all convoys and community events."
+                        : "Contributing to the growth and success of our virtual trucking community."
+                      }
+                    </p>
+                    <div className="team-stats">
+                      <span>🎖️ {member.role.name}</span>
+                      <span>📅 Since {new Date(member.joinDate).getFullYear()}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-            <div className="team-card">
-              <div className="team-avatar">
-                <div className="avatar-placeholder">M2</div>
-              </div>
-              <div className="team-info">
-                <h3>Event Coordinator</h3>
-                <p className="team-role">Events Manager</p>
-                <p className="team-description">Organizing and managing all convoys and community events.</p>
-                <div className="team-stats">
-                  <span>📅 Events</span>
-                  <span>🎯 Planning</span>
-                </div>
-              </div>
+          )}
+          
+          {!loading && !error && staffMembers.length === 0 && (
+            <div className="no-members-message">
+              <p>No staff members found.</p>
             </div>
-            <div className="team-card">
-              <div className="team-avatar">
-                <div className="avatar-placeholder">M3</div>
-              </div>
-              <div className="team-info">
-                <h3>Technical Support</h3>
-                <p className="team-role">IT Specialist</p>
-                <p className="team-description">Managing technical aspects and helping with mod installations.</p>
-                <div className="team-stats">
-                  <span>💻 Technical</span>
-                  <span>🔧 Support</span>
-                </div>
-              </div>
+          )}
+          
+          {!loading && !error && staffMembers.length > 9 && (
+            <div className="view-all-message">
+              <p>Showing 9 of {staffMembers.length} team members</p>
+              <p className="total-members">Total VTC Members: {teamMembers.length}</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Join Team Section */}
-      <section className="join-team-section">
-        <div className="container">
-          <div className="join-team-content">
-            <h2>Want to Join Our Team?</h2>
-            <p>We're always looking for passionate drivers and community members to help us grow.</p>
-            <Link to="/contact" className="join-team-btn">Get In Touch</Link>
-          </div>
+          )}
         </div>
       </section>
 

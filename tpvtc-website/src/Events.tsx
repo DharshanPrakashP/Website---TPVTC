@@ -15,7 +15,6 @@ function Events() {
   const breadcrumbRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const upcomingRef = useRef<HTMLDivElement>(null)
-  const pastRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,32 +79,6 @@ function Events() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: upcomingRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      )
-    }
-
-    // Animate past events section
-    if (pastRef.current) {
-      const pastEventCards = pastRef.current.querySelectorAll('.event-card')
-      gsap.fromTo(pastEventCards, 
-        {
-          y: 80,
-          opacity: 0,
-          rotationY: 15
-        },
-        {
-          y: 0,
-          opacity: 1,
-          rotationY: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "back.out(1.2)",
-          scrollTrigger: {
-            trigger: pastRef.current,
             start: "top 80%",
             end: "bottom 20%",
             toggleActions: "play none none reverse"
@@ -252,53 +225,7 @@ function Events() {
         </div>
       </section>
 
-      {/* Past Events Section */}
-      <section ref={pastRef} className="past-events-section">
-        <div className="container">
-          <div className="section-header">
-            <div className="section-label">PAST EVENTS</div>
-            <h2>Our Memorable Journeys</h2>
-          </div>
-          <div className="events-grid">
-            <div className="event-card past">
-              <div className="event-date past">
-                <span className="day">15</span>
-                <span className="month">NOV</span>
-              </div>
-              <div className="event-content">
-                <h3>Diwali Special Convoy</h3>
-                <p className="event-time">⏰ Completed</p>
-                <p className="event-description">A spectacular Diwali celebration convoy with traditional Tamil music and decorations.</p>
-                <div className="event-stats">👥 45 Participants • 🚛 850 KM</div>
-              </div>
-            </div>
-            <div className="event-card past">
-              <div className="event-date past">
-                <span className="day">02</span>
-                <span className="month">NOV</span>
-              </div>
-              <div className="event-content">
-                <h3>Tamil Culture Drive</h3>
-                <p className="event-time">⏰ Completed</p>
-                <p className="event-description">Celebrating Tamil heritage with a cultural convoy featuring traditional music and routes.</p>
-                <div className="event-stats">👥 38 Participants • 🚛 650 KM</div>
-              </div>
-            </div>
-            <div className="event-card past">
-              <div className="event-date past">
-                <span className="day">20</span>
-                <span className="month">OCT</span>
-              </div>
-              <div className="event-content">
-                <h3>Founding Anniversary</h3>
-                <p className="event-time">⏰ Completed</p>
-                <p className="event-description">Celebrating our company's founding with a special anniversary convoy and community gathering.</p>
-                <div className="event-stats">👥 52 Participants • 🚛 920 KM</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Footer */}
       <footer className="footer">

@@ -11,11 +11,6 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
-.past-events-section {
-  padding: 80px 0;
-  background: rgba(0, 0, 0, 0.2);
-}
-
 .events-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -58,11 +53,6 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.event-card.past {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.05);
-}
-
 .event-date {
   display: flex;
   flex-direction: column;
@@ -75,10 +65,6 @@
   height: 80px;
   text-align: center;
   flex-shrink: 0;
-}
-
-.event-date.past {
-  background: linear-gradient(135deg, #666, #444);
 }
 
 .event-date .day {
@@ -126,19 +112,6 @@
   padding: 0.5rem 1rem;
   border-radius: 20px;
   display: inline-block;
-}
-
-.event-stats {
-  color: #a8a8a8;
-  font-size: 0.85rem;
-  display: flex;
-  gap: 1rem;
-}
-
-.event-stats span {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.3rem 0.8rem;
-  border-radius: 12px;
 }
 
 /* Section Headers */
