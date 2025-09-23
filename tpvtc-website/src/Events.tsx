@@ -189,9 +189,6 @@ function Events() {
               <Link to="/team" className="events-nav-link">Our Team</Link>
             </li>
             <li className="events-nav-item">
-              <a href="#gallery" className="events-nav-link">Gallery</a>
-            </li>
-            <li className="events-nav-item">
               <Link to="/contact" className="events-nav-link">Contact</Link>
             </li>
           </ul>
@@ -226,9 +223,6 @@ function Events() {
               </li>
               <li className="events-mobile-nav-item">
                 <Link to="/team" className="events-mobile-nav-link" onClick={toggleMobileMenu}>Our Team</Link>
-              </li>
-              <li className="events-mobile-nav-item">
-                <a href="#gallery" className="events-mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
               </li>
               <li className="events-mobile-nav-item">
                 <Link to="/contact" className="events-mobile-nav-link" onClick={toggleMobileMenu}>Contact</Link>

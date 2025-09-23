@@ -153,9 +153,6 @@ function Contact() {
               <Link to="/team" className="contact-nav-link">Our Team</Link>
             </li>
             <li className="contact-nav-item">
-              <a href="#gallery" className="contact-nav-link">Gallery</a>
-            </li>
-            <li className="contact-nav-item">
               <Link to="/contact" className="contact-nav-link active">Contact</Link>
             </li>
           </ul>
@@ -190,9 +187,6 @@ function Contact() {
               </li>
               <li className="contact-mobile-nav-item">
                 <Link to="/team" className="contact-mobile-nav-link" onClick={toggleMobileMenu}>Our Team</Link>
-              </li>
-              <li className="contact-mobile-nav-item">
-                <a href="#gallery" className="contact-mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
               </li>
               <li className="contact-mobile-nav-item">
                 <Link to="/contact" className="contact-mobile-nav-link active" onClick={toggleMobileMenu}>Contact</Link>
