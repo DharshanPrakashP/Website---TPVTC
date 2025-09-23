@@ -279,7 +279,14 @@ function About() {
               </p>
             </div>
             <div className="about-image">
-              <img src="/images/aboutus.PNG" alt="Tamil Pasanga About Us" />
+              <img 
+                src="/images/aboutus.PNG" 
+                alt="Tamil Pasanga About Us" 
+                onError={(e) => {
+                  console.log('Image failed to load:', e.target.src);
+                  e.target.style.display = 'none';
+                }}
+              />
             </div>
           </div>
         </div>
