@@ -199,16 +199,16 @@ function Home() {
               <Link to="/rules" className="nav-link">Rules</Link>
             </li>
             <li className="nav-item">
-              <a href="#events" className="nav-link">Events</a>
+              <Link to="/events" className="nav-link">Events</Link>
             </li>
             <li className="nav-item">
-              <a href="#team" className="nav-link">Our Team</a>
+              <Link to="/team" className="nav-link">Our Team</Link>
             </li>
             <li className="nav-item">
               <a href="#gallery" className="nav-link">Gallery</a>
             </li>
             <li className="nav-item">
-              <a href="#contact" className="nav-link">Contact</a>
+              <Link to="/contact" className="nav-link">Contact</Link>
             </li>
           </ul>
 
@@ -238,16 +238,16 @@ function Home() {
                 <Link to="/rules" className="mobile-nav-link" onClick={toggleMobileMenu}>Rules</Link>
               </li>
               <li className="mobile-nav-item">
-                <a href="#events" className="mobile-nav-link" onClick={toggleMobileMenu}>Events</a>
+                <Link to="/events" className="mobile-nav-link" onClick={toggleMobileMenu}>Events</Link>
               </li>
               <li className="mobile-nav-item">
-                <a href="#team" className="mobile-nav-link" onClick={toggleMobileMenu}>Our Team</a>
+                <Link to="/team" className="mobile-nav-link" onClick={toggleMobileMenu}>Our Team</Link>
               </li>
               <li className="mobile-nav-item">
                 <a href="#gallery" className="mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
               </li>
               <li className="mobile-nav-item">
-                <a href="#contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact</a>
+                <Link to="/contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact</Link>
               </li>
             </ul>
           </div>
