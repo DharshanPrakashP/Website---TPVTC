@@ -134,10 +134,16 @@ function Rules() {
               <Link to="/about" className="rules-nav-link">About</Link>
             </li>
             <li className="rules-nav-item">
-              <a href="#gallery" className="rules-nav-link">Gallery</a>
+              <Link to="/rules" className="rules-nav-link active">Rules</Link>
             </li>
             <li className="rules-nav-item">
-              <Link to="/rules" className="rules-nav-link active">Rules</Link>
+              <a href="#events" className="rules-nav-link">Events</a>
+            </li>
+            <li className="rules-nav-item">
+              <a href="#team" className="rules-nav-link">Our Team</a>
+            </li>
+            <li className="rules-nav-item">
+              <a href="#gallery" className="rules-nav-link">Gallery</a>
             </li>
             <li className="rules-nav-item">
               <a href="#contact" className="rules-nav-link">Contact</a>
@@ -167,10 +173,16 @@ function Rules() {
                 <Link to="/about" className="rules-mobile-nav-link" onClick={toggleMobileMenu}>About</Link>
               </li>
               <li className="rules-mobile-nav-item">
-                <a href="#gallery" className="rules-mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
+                <Link to="/rules" className="rules-mobile-nav-link active" onClick={toggleMobileMenu}>Rules</Link>
               </li>
               <li className="rules-mobile-nav-item">
-                <Link to="/rules" className="rules-mobile-nav-link active" onClick={toggleMobileMenu}>Rules</Link>
+                <a href="#events" className="rules-mobile-nav-link" onClick={toggleMobileMenu}>Events</a>
+              </li>
+              <li className="rules-mobile-nav-item">
+                <a href="#team" className="rules-mobile-nav-link" onClick={toggleMobileMenu}>Our Team</a>
+              </li>
+              <li className="rules-mobile-nav-item">
+                <a href="#gallery" className="rules-mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
               </li>
               <li className="rules-mobile-nav-item">
                 <a href="#contact" className="rules-mobile-nav-link" onClick={toggleMobileMenu}>Contact</a>

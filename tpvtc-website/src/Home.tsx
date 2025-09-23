@@ -196,10 +196,16 @@ function Home() {
               <Link to="/about" className="nav-link">About</Link>
             </li>
             <li className="nav-item">
-              <a href="#gallery" className="nav-link">Gallery</a>
+              <Link to="/rules" className="nav-link">Rules</Link>
             </li>
             <li className="nav-item">
-              <Link to="/rules" className="nav-link">Rules</Link>
+              <a href="#events" className="nav-link">Events</a>
+            </li>
+            <li className="nav-item">
+              <a href="#team" className="nav-link">Our Team</a>
+            </li>
+            <li className="nav-item">
+              <a href="#gallery" className="nav-link">Gallery</a>
             </li>
             <li className="nav-item">
               <a href="#contact" className="nav-link">Contact</a>
@@ -229,10 +235,16 @@ function Home() {
                 <Link to="/about" className="mobile-nav-link" onClick={toggleMobileMenu}>About</Link>
               </li>
               <li className="mobile-nav-item">
-                <a href="#gallery" className="mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
+                <Link to="/rules" className="mobile-nav-link" onClick={toggleMobileMenu}>Rules</Link>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/rules" className="mobile-nav-link" onClick={toggleMobileMenu}>Rules</Link>
+                <a href="#events" className="mobile-nav-link" onClick={toggleMobileMenu}>Events</a>
+              </li>
+              <li className="mobile-nav-item">
+                <a href="#team" className="mobile-nav-link" onClick={toggleMobileMenu}>Our Team</a>
+              </li>
+              <li className="mobile-nav-item">
+                <a href="#gallery" className="mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
               </li>
               <li className="mobile-nav-item">
                 <a href="#contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact</a>
