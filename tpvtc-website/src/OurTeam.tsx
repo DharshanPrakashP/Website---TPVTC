@@ -215,7 +215,7 @@ function OurTeam() {
   }
 
   const openUserProfile = (userId: number) => {
-    alert(`User ID: ${userId}`)
+    window.open(`https://truckersmp.com/user/${userId}`, '_blank', 'noopener,noreferrer');
   }
 
   return (
