@@ -808,3 +808,123 @@
     opacity: 1;
   }
 }
+
+/* ===============================
+   STATISTICS SECTION STYLES
+   =============================== */
+
+.statistics-section {
+  padding: 120px 0;
+  background: #0a0a0a;
+  color: white;
+}
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 60px;
+  margin-top: 60px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.statistic-item {
+  text-align: center;
+  padding: 40px 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 107, 53, 0.2);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.statistic-item:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 107, 53, 0.1);
+  border-color: rgba(255, 107, 53, 0.5);
+  box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+}
+
+.statistic-icon {
+  margin-bottom: 25px;
+}
+
+.statistic-icon .icon-circle {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.statistic-item:hover .statistic-icon .icon-circle {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 15px 30px rgba(255, 107, 53, 0.4);
+}
+
+.statistic-number {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #ff6b35;
+  margin-bottom: 15px;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: -2px;
+}
+
+.statistic-number .counter {
+  display: inline-block;
+}
+
+.statistic-number .plus {
+  color: #ff6b35;
+  font-size: 3rem;
+  vertical-align: top;
+  margin-left: 5px;
+  opacity: 0.8;
+}
+
+.statistic-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: white;
+  font-weight: 600;
+}
+
+.statistic-item p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .statistics-section {
+    padding: 80px 0;
+  }
+  
+  .statistics-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  
+  .statistic-number {
+    font-size: 3rem;
+  }
+  
+  .statistic-number .plus {
+    font-size: 2.5rem;
+  }
+  
+  .statistic-icon .icon-circle {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
+  }
+}

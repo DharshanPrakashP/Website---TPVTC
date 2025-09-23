@@ -114,10 +114,13 @@ function About() {
       )
     }
 
-    // Animate team section
+    // Animate statistics section with counter animation
     if (teamRef.current) {
-      const teamMembers = teamRef.current.querySelectorAll('.team-member')
-      gsap.fromTo(teamMembers, 
+      const statisticItems = teamRef.current.querySelectorAll('.statistic-item')
+      const counters = teamRef.current.querySelectorAll('.counter')
+      
+      // Animate the statistic items
+      gsap.fromTo(statisticItems, 
         {
           y: 100,
           opacity: 0,
@@ -128,7 +131,7 @@ function About() {
           opacity: 1,
           scale: 1,
           duration: 1,
-          stagger: 0.2,
+          stagger: 0.3,
           ease: "power3.out",
           scrollTrigger: {
             trigger: teamRef.current,
@@ -138,6 +141,28 @@ function About() {
           }
         }
       )
+
+      // Animate the counters
+      counters.forEach((counter: any) => {
+        const target = parseInt(counter.getAttribute('data-target'))
+        gsap.fromTo(counter, 
+          { innerHTML: 0 },
+          {
+            innerHTML: target,
+            duration: 2,
+            ease: "power2.out",
+            snap: { innerHTML: 1 },
+            scrollTrigger: {
+              trigger: teamRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            },
+            onUpdate: function() {
+              counter.innerHTML = Math.ceil(counter.innerHTML)
+            }
+          }
+        )
+      })
     }
 
     return () => {
@@ -304,60 +329,36 @@ function About() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section ref={teamRef} className="testimonials-section">
+      {/* Statistics Section */}
+      <section ref={teamRef} className="statistics-section">
         <div className="container">
           <div className="section-header">
-            <div className="section-label">TESTIMONIAL</div>
-            <h2>Happy Clients</h2>
+            <div className="section-label">OUR ACHIEVEMENTS</div>
+            <h2>Community Statistics</h2>
           </div>
-          <div className="testimonials-grid">
-            <div className="testimonial-item">
-              <div className="testimonial-avatar">
-                <img src="/api/placeholder/80/80" alt="Roger Scott" />
+          <div className="statistics-grid">
+            <div className="statistic-item">
+              <div className="statistic-icon">
+                <span className="icon-circle">👥</span>
               </div>
-              <p className="testimonial-text">
-                Far far away, behind the word mountains, far from the countries 
-                Vokalia and Consonantia, there live the blind texts.
-              </p>
-              <div className="testimonial-author">
-                <h4>Roger Scott</h4>
-                <span>System Analyst</span>
+              <div className="statistic-number">
+                <span className="counter" data-target="50">0</span>
+                <span className="plus">+</span>
               </div>
+              <h3>Active Drivers</h3>
+              <p>Professional drivers from around the world</p>
             </div>
-            <div className="testimonial-item">
-              <div className="testimonial-avatar">
-                <img src="/api/placeholder/80/80" alt="Roger Scott" />
+            <div className="statistic-item">
+              <div className="statistic-icon">
+                <span className="icon-circle">🎉</span>
               </div>
-              <p className="testimonial-text">
-                Far far away, behind the word mountains, far from the countries 
-                Vokalia and Consonantia, there live the blind texts.
-              </p>
-              <div className="testimonial-author">
-                <h4>Roger Scott</h4>
-                <span>Marketing Manager</span>
+              <div className="statistic-number">
+                <span className="counter" data-target="100">0</span>
+                <span className="plus">+</span>
               </div>
+              <h3>Events Completed</h3>
+              <p>Successful convoys and community events</p>
             </div>
-            <div className="testimonial-item">
-              <div className="testimonial-avatar">
-                <img src="/api/placeholder/80/80" alt="Roger Scott" />
-              </div>
-              <p className="testimonial-text">
-                Far far away, behind the word mountains, far from the countries 
-                Vokalia and Consonantia, there live the blind texts.
-              </p>
-              <div className="testimonial-author">
-                <h4>Roger Scott</h4>
-                <span>Interface Designer</span>
-              </div>
-            </div>
-          </div>
-          <div className="testimonial-dots">
-            <span className="dot active"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
           </div>
         </div>
       </section>
