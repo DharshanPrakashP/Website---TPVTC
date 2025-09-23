@@ -64,10 +64,12 @@ function OurTeam() {
         const apiUrls = [
           // Netlify function (best option for production)
           '/.netlify/functions/team-members',
+          // CORS proxy alternatives (more reliable)
+          'https://corsproxy.io/?url=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/members'),
+          'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/members'),
+          'https://thingproxy.freeboard.io/fetch/' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/members'),
           // Direct API call (might work in some environments)
-          'https://api.truckersmp.com/v2/vtc/73933/members',
-          // CORS proxy alternatives
-          'https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/members')
+          'https://api.truckersmp.com/v2/vtc/73933/members'
         ]
         
         let data: ApiResponse | null = null
@@ -91,14 +93,18 @@ function OurTeam() {
             
             const responseData = await response.json()
             
-            // Handle AllOrigins proxy response format
+            // Handle different proxy response formats
             if (url.includes('allorigins')) {
               if (responseData.contents) {
                 data = JSON.parse(responseData.contents)
               } else {
                 throw new Error('Invalid AllOrigins response')
               }
+            } else if (url.includes('corsproxy.io') || url.includes('codetabs.com') || url.includes('thingproxy')) {
+              // These proxies return the data directly
+              data = responseData
             } else {
+              // Direct API call or Netlify function
               data = responseData
             }
             
