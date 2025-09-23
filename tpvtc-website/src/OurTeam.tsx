@@ -221,7 +221,7 @@ function OurTeam() {
   return (
     <div className="about">
       {/* Navigation */}
-     <nav ref={navbarRef} className="navbar">
+  <nav ref={navbarRef} className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
           <div className="nav-logo">
             <Link to="/">
