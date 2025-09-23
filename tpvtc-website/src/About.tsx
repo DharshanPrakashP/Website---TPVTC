@@ -198,16 +198,16 @@ function About() {
               <Link to="/rules" className="nav-link">Rules</Link>
             </li>
             <li className="nav-item">
-              <Link to="/events" className="nav-link">Events</Link>
+              <a href="#events" className="nav-link">Events</a>
             </li>
             <li className="nav-item">
-              <Link to="/team" className="nav-link">Our Team</Link>
+              <a href="#team" className="nav-link">Our Team</a>
             </li>
             <li className="nav-item">
               <a href="#gallery" className="nav-link">Gallery</a>
             </li>
             <li className="nav-item">
-              <Link to="/contact" className="nav-link">Contact</Link>
+              <a href="#contact" className="nav-link">Contact</a>
             </li>
           </ul>
 
@@ -237,16 +237,16 @@ function About() {
                 <Link to="/rules" className="mobile-nav-link" onClick={toggleMobileMenu}>Rules</Link>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/events" className="mobile-nav-link" onClick={toggleMobileMenu}>Events</Link>
+                <a href="#events" className="mobile-nav-link" onClick={toggleMobileMenu}>Events</a>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/team" className="mobile-nav-link" onClick={toggleMobileMenu}>Our Team</Link>
+                <a href="#team" className="mobile-nav-link" onClick={toggleMobileMenu}>Our Team</a>
               </li>
               <li className="mobile-nav-item">
                 <a href="#gallery" className="mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact</Link>
+                <a href="#contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact</a>
               </li>
             </ul>
           </div>
