@@ -142,26 +142,27 @@ function About() {
         }
       )
 
-      // Animate the counters
+      // Animate the counters with React-safe approach
       counters.forEach((counter: any) => {
         const target = parseInt(counter.getAttribute('data-target'))
-        gsap.fromTo(counter, 
-          { innerHTML: 0 },
-          {
-            innerHTML: target,
+        if (!isNaN(target)) {
+          const obj = { value: 0 }
+          gsap.to(obj, {
+            value: target,
             duration: 2,
             ease: "power2.out",
-            snap: { innerHTML: 1 },
             scrollTrigger: {
               trigger: teamRef.current,
               start: "top 80%",
               toggleActions: "play none none reverse"
             },
             onUpdate: function() {
-              counter.innerHTML = Math.ceil(counter.innerHTML)
+              if (counter) {
+                counter.textContent = Math.ceil(obj.value).toString()
+              }
             }
-          }
-        )
+          })
+        }
       })
     }
 

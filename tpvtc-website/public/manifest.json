@@ -1,0 +1,16 @@
+{
+  "name": "Tamil Pasanga",
+  "short_name": "Tamil Pasanga",
+  "description": "Tamil Pasanga Virtual Trucking Company",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ff6b35",
+  "icons": [
+    {
+      "src": "/TP_NEW_WB_PNGxxxhdpi.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
