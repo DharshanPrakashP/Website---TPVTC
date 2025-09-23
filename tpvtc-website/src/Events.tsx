@@ -12,6 +12,14 @@ interface Event {
   banner: string;
   meetup_at: string;
   start_at: string;
+  departure: {
+    city: string;
+    location: string;
+  };
+  arrive: {
+    city: string;
+    location: string;
+  };
 }
 
 function Events() {
@@ -148,6 +156,10 @@ function Events() {
     console.log(`More info for event ID: ${id}`);
   };
 
+  const handleViewEvent = (id: number) => {
+    window.open(`https://truckersmp.com/events/${id}`, '_blank');
+  };
+
   return (
     <div className="Events">
       {/* Navigation */}
@@ -253,15 +265,20 @@ function Events() {
           {!loading && !error && (
             <div ref={eventsGridRef} className="events-grid">
               {events.map((event) => (
-                <div key={event.id} className="event-item">
+                <div key={event.id} className="event-card">
                   <img src={event.banner} alt={event.name} className="event-banner" />
-                  <div className="event-content">
-                    <h3>{event.name}</h3>
-                    <p>Meet-Up Time: {new Date(event.meetup_at).toLocaleString()}</p>
-                    <p>Start Time: {new Date(event.start_at).toLocaleString()}</p>
-                    <button onClick={() => handleMoreInfo(event.id)} className="more-info-btn">
-                      More Info
-                    </button>
+                  <div className="event-details">
+                    <h3 className="event-name">{event.name}</h3>
+                    <p className="event-game">ETS2 • To be determined</p>
+                    <p className="event-time">Meet: {new Date(event.meetup_at).toLocaleString()}</p>
+                    <p className="event-time">Start: {new Date(event.start_at).toLocaleString()}</p>
+                    <p className="event-route">
+                      From <strong>{event.departure.city}</strong> ({event.departure.location}) → <strong>{event.arrive.city}</strong> ({event.arrive.location})
+                    </p>
+                    <div className="event-buttons">
+                      <button onClick={() => handleMoreInfo(event.id)} className="event-btn details-btn">Details</button>
+                      <button onClick={() => handleViewEvent(event.id)} className="event-btn view-btn">View Event</button>
+                    </div>
                   </div>
                 </div>
               ))}
