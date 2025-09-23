@@ -6,23 +6,34 @@ import './OurTeam.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+interface Role {
+  id: number
+  name: string
+  order: number
+  owner: boolean
+  created_at: string
+  updated_at: string
+}
+
 interface TeamMember {
   id: number
+  user_id: number
   username: string
-  displayName?: string
-  role: {
-    id: number
-    name: string
-    order: number
-  }
-  avatar?: string
+  steam_id: number
+  steamID64: number
+  steamID: string
+  roles: Role[]
+  role_id: number
+  role: string
+  is_owner: boolean
   joinDate: string
 }
 
 interface ApiResponse {
+  error: boolean
   response: {
     members: TeamMember[]
-    pagination: {
+    pagination?: {
       current: number
       count: number
       total: number
@@ -30,10 +41,24 @@ interface ApiResponse {
   }
 }
 
+interface EnhancedTeamMember extends Omit<TeamMember, 'role'> {
+  roleData: Role
+  displayName?: string
+  avatar?: string
+}
+
+interface RolesApiResponse {
+  error: boolean
+  response: {
+    roles: Role[]
+  }
+}
+
 function OurTeam() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
+  const [teamMembers, setTeamMembers] = useState<EnhancedTeamMember[]>([])
+  const [roles, setRoles] = useState<Role[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   
@@ -54,7 +79,53 @@ function OurTeam() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Fetch team members from TruckersMP API
+    // Function to fetch team roles
+  const fetchTeamRoles = async (): Promise<Role[]> => {
+    const apiUrls = [
+      '/.netlify/functions/team-roles',
+      'https://corsproxy.io/?url=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/roles'),
+      'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://api.truckersmp.com/v2/vtc/73933/roles'),
+      'https://api.truckersmp.com/v2/vtc/73933/roles'
+    ]
+
+    for (const url of apiUrls) {
+      try {
+        console.log(`Attempting to fetch roles from: ${url}`)
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
+        const responseData = await response.json()
+        
+        let data: RolesApiResponse
+        
+        if (url.includes('corsproxy.io') || url.includes('codetabs.com')) {
+          data = responseData
+        } else {
+          data = responseData
+        }
+
+        if (data && data.response && data.response.roles) {
+          console.log('Successfully fetched roles from:', url)
+          return data.response.roles
+        }
+      } catch (error) {
+        console.error(`Failed to fetch roles from ${url}:`, error)
+        continue
+      }
+    }
+    
+    throw new Error('Failed to fetch roles from all sources')
+  }
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
@@ -283,8 +354,8 @@ function OurTeam() {
     const groups: { [key: string]: typeof teamMembers } = {}
     
     teamMembers.forEach(member => {
-      if (member && member.role && member.role.name) {
-        const roleName = member.role.name
+      if (member && member.roleData && member.roleData.name) {
+        const roleName = member.roleData.name
         if (!groups[roleName]) {
           groups[roleName] = []
         }
@@ -294,8 +365,8 @@ function OurTeam() {
     
     // Sort groups by role order (lowest order first)
     const sortedGroups = Object.entries(groups).sort(([, membersA], [, membersB]) => {
-      const orderA = membersA[0]?.role?.order || 999
-      const orderB = membersB[0]?.role?.order || 999
+      const orderA = membersA[0]?.roleData?.order || 999
+      const orderB = membersB[0]?.roleData?.order || 999
       return orderA - orderB
     })
     
@@ -423,17 +494,13 @@ function OurTeam() {
                 {members.map((member) => (
                   <div key={member.id} className="team-member">
                     <div className="team-avatar">
-                      {member.avatar ? (
-                        <img src={member.avatar} alt={member.displayName || member.username} />
-                      ) : (
-                        <div className="avatar-placeholder">
-                          {getInitials(member.displayName || member.username)}
-                        </div>
-                      )}
+                      <div className="avatar-placeholder">
+                        {getInitials(member.username)}
+                      </div>
                     </div>
                     <div className="team-info">
-                      <h4>{member.displayName || member.username}</h4>
-                      <p className="team-role">{member.role.name}</p>
+                      <h4>{member.username}</h4>
+                      <p className="team-role">{member.roleData.name}</p>
                       <p className="team-description">
                         {member.role.name.toLowerCase().includes('founder') || member.role.name.toLowerCase().includes('managing director') 
                           ? "Visionary leader guiding Tamil Pasanga VTC to bring the Tamil trucking community together."
