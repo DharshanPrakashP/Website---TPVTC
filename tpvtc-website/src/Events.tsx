@@ -6,9 +6,20 @@ import './Events.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+interface Event {
+  id: number;
+  name: string;
+  banner: string;
+  meetup_at: string;
+  start_at: string;
+}
+
 function Events() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [events, setEvents] = useState<Event[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   
   // GSAP refs
   const navbarRef = useRef<HTMLDivElement>(null)
@@ -114,6 +125,29 @@ function Events() {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch('/.netlify/functions/events')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data = await response.json()
+        setEvents(data.response || [])
+      } catch (err) {
+        setError((err as Error).message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchEvents()
+  }, [])
+
+  const handleMoreInfo = (id: number) => {
+    console.log(`More info for event ID: ${id}`);
+  };
+
   return (
     <div className="Events">
       {/* Navigation */}
@@ -212,80 +246,27 @@ function Events() {
         <div className="events-container">
           <div className="events-section-label">UPCOMING CONVOYS</div>
           <h2>Tamil Pasanga Events & Convoys</h2>
-          
-          <div ref={eventsGridRef} className="events-grid">
-            <div className="event-item">
-              <div className="event-date">
-                <span className="event-day">25</span>
-                <span className="event-month">DEC</span>
-              </div>
-              <div className="event-content">
-                <h3>Christmas Convoy 2025</h3>
-                <p className="event-description">
-                  Join us for our annual Christmas convoy celebration! We'll be driving through the festive routes of Europe, spreading holiday cheer across the virtual highways.
-                </p>
-                <div className="event-details">
-                  <span>🚛 Route: Calais → Berlin</span>
-                  <span>⏰ Time: 19:00 UTC</span>
-                  <span>🎯 Meeting Point: Calais</span>
+
+          {loading && <p>Loading events...</p>}
+          {error && <p>Error: {error}</p>}
+
+          {!loading && !error && (
+            <div ref={eventsGridRef} className="events-grid">
+              {events.map((event) => (
+                <div key={event.id} className="event-item">
+                  <img src={event.banner} alt={event.name} className="event-banner" />
+                  <div className="event-content">
+                    <h3>{event.name}</h3>
+                    <p>Meet-Up Time: {new Date(event.meetup_at).toLocaleString()}</p>
+                    <p>Start Time: {new Date(event.start_at).toLocaleString()}</p>
+                    <button onClick={() => handleMoreInfo(event.id)} className="more-info-btn">
+                      More Info
+                    </button>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-            
-            <div className="event-item">
-              <div className="event-date">
-                <span className="event-day">31</span>
-                <span className="event-month">DEC</span>
-              </div>
-              <div className="event-content">
-                <h3>New Year's Eve Special</h3>
-                <p className="event-description">
-                  Ring in the new year with Tamil Pasanga! A special midnight convoy to celebrate 2026 with our amazing community members.
-                </p>
-                <div className="event-details">
-                  <span>🚛 Route: Paris → Amsterdam</span>
-                  <span>⏰ Time: 22:00 UTC</span>
-                  <span>🎯 Meeting Point: Paris</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="event-item">
-              <div className="event-date">
-                <span className="event-day">15</span>
-                <span className="event-month">JAN</span>
-              </div>
-              <div className="event-content">
-                <h3>Weekly Training Session</h3>
-                <p className="event-description">
-                  New to VTC convoys? Join our weekly training sessions where experienced drivers teach convoy rules, formations, and safety protocols.
-                </p>
-                <div className="event-details">
-                  <span>🚛 Route: Training Circuit</span>
-                  <span>⏰ Time: 18:00 UTC</span>
-                  <span>🎯 Meeting Point: Duisburg</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="event-item">
-              <div className="event-date">
-                <span className="event-day">22</span>
-                <span className="event-month">JAN</span>
-              </div>
-              <div className="event-content">
-                <h3>Tamil Culture Day</h3>
-                <p className="event-description">
-                  Celebrating Tamil heritage with a special themed convoy! Join us as we showcase Tamil culture and connect with our roots on the virtual roads.
-                </p>
-                <div className="event-details">
-                  <span>🚛 Route: Mumbai → Chennai</span>
-                  <span>⏰ Time: 16:00 UTC</span>
-                  <span>🎯 Meeting Point: Mumbai</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
