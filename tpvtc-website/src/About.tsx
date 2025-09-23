@@ -282,9 +282,9 @@ function About() {
               <img 
                 src="/images/aboutus.PNG" 
                 alt="Tamil Pasanga About Us" 
-                onError={(e) => {
-                  console.log('Image failed to load:', e.target.src);
-                  e.target.style.display = 'none';
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                  console.log('Image failed to load:', (e.target as HTMLImageElement).src);
+                  (e.target as HTMLImageElement).style.display = 'none';
                 }}
               />
             </div>
