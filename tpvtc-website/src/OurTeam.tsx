@@ -224,7 +224,8 @@ function OurTeam() {
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} ref={navbarRef}>
         <div className="nav-container">
           <Link to="/" className="nav-logo">
-            <img src="/TP_NEW_WB_PNGxxxhdpi.png" alt="Tamil Pasanga VTC" className="logo-img" />
+              <span className="logo-part-1">Tamil Pasanga</span>
+            
           </Link>
           <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
             <Link to="/" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
