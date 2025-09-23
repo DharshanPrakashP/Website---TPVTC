@@ -152,10 +152,6 @@ function Events() {
     fetchEvents()
   }, [])
 
-  const handleMoreInfo = (id: number) => {
-    console.log(`More info for event ID: ${id}`);
-  };
-
   const handleViewEvent = (id: number) => {
     window.open(`https://truckersmp.com/events/${id}`, '_blank');
   };
@@ -270,7 +266,6 @@ function Events() {
                       From <strong>{event.departure.city}</strong> ({event.departure.location}) → <strong>{event.arrive.city}</strong> ({event.arrive.location})
                     </p>
                     <div className="event-buttons">
-                      <button onClick={() => handleMoreInfo(event.id)} className="event-btn details-btn">Details</button>
                       <button onClick={() => handleViewEvent(event.id)} className="event-btn view-btn">View Event</button>
                     </div>
                   </div>

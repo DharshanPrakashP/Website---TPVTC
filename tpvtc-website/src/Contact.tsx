@@ -218,52 +218,6 @@ function Contact() {
           <h2>Contact Tamil Pasanga VTC</h2>
           
           <div ref={contactFormRef} className="contact-grid">
-            {/* Contact Form */}
-            <div className="contact-card">
-              <h3>Send us a Message</h3>
-              <form onSubmit={handleSubmit} className="contact-form">
-                <div className="form-group">
-                  <label htmlFor="name">Your Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label htmlFor="email">Email Address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label htmlFor="message">Your Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={6}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    required
-                  ></textarea>
-                </div>
-                
-                <button type="submit" className="submit-btn">
-                  Send Message
-                </button>
-              </form>
-            </div>
-            
             {/* Contact Information */}
             <div className="contact-info">
               <div className="contact-info-item">
@@ -292,15 +246,6 @@ function Contact() {
                     <li>✓ Willingness to follow VTC rules</li>
                     <li>✓ Participate in community events</li>
                   </ul>
-                </div>
-              </div>
-              
-              <div className="contact-info-item">
-                <h4>Support</h4>
-                <p>Need help with convoy procedures, VTC rules, or technical issues? Our support team is here to assist you.</p>
-                <div className="support-hours">
-                  <p><strong>Response Time:</strong> Usually within 24 hours</p>
-                  <p><strong>Languages:</strong> Tamil, English</p>
                 </div>
               </div>
             </div>

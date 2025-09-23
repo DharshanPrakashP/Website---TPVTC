@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './OurTeam.css'
@@ -49,6 +49,8 @@ function OurTeam() {
   const breadcrumbRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
+
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -234,22 +236,22 @@ function OurTeam() {
           {/* Desktop Menu */}
           <ul className="nav-menu">
             <li className="nav-item">
-              <Link to="/" className="nav-link active">Home</Link>
+              <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
             </li>
             <li className="nav-item">
-              <Link to="/about" className="nav-link">About</Link>
+              <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>About</Link>
             </li>
             <li className="nav-item">
-              <Link to="/rules" className="nav-link">Rules</Link>
+              <Link to="/rules" className={`nav-link ${location.pathname === '/rules' ? 'active' : ''}`}>Rules</Link>
             </li>
             <li className="nav-item">
-              <Link to="/events" className="nav-link">Events</Link>
+              <Link to="/events" className={`nav-link ${location.pathname === '/events' ? 'active' : ''}`}>Events</Link>
             </li>
             <li className="nav-item">
-              <Link to="/team" className="nav-link">Our Team</Link>
+              <Link to="/team" className={`nav-link ${location.pathname === '/team' ? 'active' : ''}`}>Our Team</Link>
             </li>
             <li className="nav-item">
-              <Link to="/contact" className="nav-link">Contact</Link>
+              <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>Contact</Link>
             </li>
           </ul>
 
@@ -270,22 +272,22 @@ function OurTeam() {
           <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
             <ul className="mobile-nav-menu">
               <li className="mobile-nav-item">
-                <Link to="/" className="mobile-nav-link active" onClick={toggleMobileMenu}>Home</Link>
+                <Link to="/" className={`mobile-nav-link ${location.pathname === '/' ? 'active' : ''}`} onClick={toggleMobileMenu}>Home</Link>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/about" className="mobile-nav-link" onClick={toggleMobileMenu}>About</Link>
+                <Link to="/about" className={`mobile-nav-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={toggleMobileMenu}>About</Link>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/rules" className="mobile-nav-link" onClick={toggleMobileMenu}>Rules</Link>
+                <Link to="/rules" className={`mobile-nav-link ${location.pathname === '/rules' ? 'active' : ''}`} onClick={toggleMobileMenu}>Rules</Link>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/events" className="mobile-nav-link" onClick={toggleMobileMenu}>Events</Link>
+                <Link to="/events" className={`mobile-nav-link ${location.pathname === '/events' ? 'active' : ''}`} onClick={toggleMobileMenu}>Events</Link>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/team" className="mobile-nav-link" onClick={toggleMobileMenu}>Our Team</Link>
+                <Link to="/team" className={`mobile-nav-link ${location.pathname === '/team' ? 'active' : ''}`} onClick={toggleMobileMenu}>Our Team</Link>
               </li>
               <li className="mobile-nav-item">
-                <Link to="/contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact</Link>
+                <Link to="/contact" className={`mobile-nav-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={toggleMobileMenu}>Contact</Link>
               </li>
             </ul>
           </div>
