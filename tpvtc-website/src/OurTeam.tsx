@@ -43,15 +43,57 @@ function OurTeam() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  
+  // GSAP refs
+  const navbarRef = useRef<HTMLElement>(null)
+  const breadcrumbRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      const scrollTop = window.scrollY
+      setIsScrolled(scrollTop > 100)
     }
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // GSAP animations
+  useEffect(() => {
+    // Hero entrance animations
+    const tl = gsap.timeline({ delay: 0.3 })
+    
+    if (navbarRef.current) {
+      gsap.set(navbarRef.current, { y: -100, opacity: 0 })
+      tl.to(navbarRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out"
+      }, 0)
+    }
+
+    if (breadcrumbRef.current) {
+      gsap.set(breadcrumbRef.current, { x: -50, opacity: 0 })
+      tl.to(breadcrumbRef.current, {
+        x: 0,
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out"
+      }, 0.3)
+    }
+
+    if (titleRef.current) {
+      gsap.set(titleRef.current, { y: 50, opacity: 0 })
+      tl.to(titleRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out"
+      }, 0.6)
+    }
   }, [])
 
   useEffect(() => {
@@ -177,12 +219,12 @@ function OurTeam() {
   }
 
   return (
-    <div className="our-team">
+    <div className="about">
       {/* Navigation */}
-      <nav className={`nav ${isScrolled ? 'scrolled' : ''}`}>
+      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} ref={navbarRef}>
         <div className="nav-container">
           <Link to="/" className="nav-logo">
-            <img src="/TP_NEW_WB_PNGxxxhdpi.png" alt="Tamil Pasanga VTC" />
+            <img src="/TP_NEW_WB_PNGxxxhdpi.png" alt="Tamil Pasanga VTC" className="logo-img" />
           </Link>
           <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
             <Link to="/" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
@@ -204,90 +246,121 @@ function OurTeam() {
               Contact
             </Link>
           </div>
-          <div className="nav-toggle" onClick={toggleMobileMenu}>
-            <span className="bar"></span>
-            <span className="bar"></span>
-            <span className="bar"></span>
-          </div>
+          <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+            <div className="hamburger">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="team-hero">
+      <section className="hero-section">
+        <div className="hero-background"></div>
         <div className="hero-content">
-          <h1>Our Team</h1>
-          <p>Meet the dedicated members who make Tamil Pasanga VTC a thriving community</p>
+          <div className="container">
+            <div className="breadcrumb" ref={breadcrumbRef}>
+              <Link to="/">Home</Link>
+              <span className="separator">›</span>
+              <span className="current">Our Team</span>
+            </div>
+            <h1 className="hero-title" ref={titleRef}>Meet Our Team</h1>
+            <p className="hero-description">
+              Discover the passionate individuals who drive Tamil Pasanga VTC forward
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Team Members Section */}
-      <section className="team-section" ref={sectionRef}>
+      <section className="main-content" ref={sectionRef}>
         <div className="container">
           {loading && (
-            <div className="loading-state">
-              <div className="spinner"></div>
-              <p>Loading team members...</p>
+            <div className="loading-section">
+              <div className="loading-content">
+                <div className="spinner"></div>
+                <h3>Loading team members...</h3>
+                <p>Please wait while we fetch our team data</p>
+              </div>
             </div>
           )}
 
           {error && (
-            <div className="error-state">
-              <p>Error: {error}</p>
-              <p>Showing offline data for demonstration.</p>
+            <div className="error-section">
+              <div className="error-content">
+                <h3>Unable to load team data</h3>
+                <p>{error}</p>
+                <p>Please try refreshing the page or contact support if the issue persists.</p>
+              </div>
             </div>
           )}
 
           {!loading && teamMembers.length > 0 && (
             <>
-              <div className="team-stats">
-                <div className="stat">
-                  <span className="stat-number">{teamMembers.length}</span>
-                  <span className="stat-label">Total Members</span>
-                </div>
-                <div className="stat">
-                  <span className="stat-number">{sortedRoleGroups.length}</span>
-                  <span className="stat-label">Different Roles</span>
+              <div className="section-header">
+                <h2>Our Team Members</h2>
+                <p>Meet the talented individuals who make our VTC community thrive</p>
+                <div className="team-stats">
+                  <div className="stat-item">
+                    <span className="stat-number">{teamMembers.length}</span>
+                    <span className="stat-label">Total Members</span>
+                  </div>
+                  <div className="stat-item">
+                    <span className="stat-number">{sortedRoleGroups.length}</span>
+                    <span className="stat-label">Different Roles</span>
+                  </div>
                 </div>
               </div>
 
-              {sortedRoleGroups.map(([roleName, members]) => (
-                <div key={roleName} className="role-section">
-                  <h2 className="team-category-header">{roleName}</h2>
-                  <div className="team-grid">
-                    {members.map((member) => (
-                      <div key={member.id} className="team-member-card">
-                        <div className="member-avatar">
-                          <div className="avatar-placeholder">
-                            {member.username.charAt(0).toUpperCase()}
+              <div className="team-content">
+                {sortedRoleGroups.map(([roleName, members]) => (
+                  <div key={roleName} className="role-section">
+                    <div className="role-header">
+                      <h3 className="role-title">{roleName}</h3>
+                      <span className="member-count">{members.length} member{members.length !== 1 ? 's' : ''}</span>
+                    </div>
+                    <div className="members-grid">
+                      {members.map((member) => (
+                        <div key={member.id} className="member-card">
+                          <div className="member-card-inner">
+                            <div className="member-avatar">
+                              <div className="avatar-circle">
+                                <span className="avatar-letter">
+                                  {member.username.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="member-details">
+                              <h4 className="member-name">{member.username}</h4>
+                              <p className="member-role">{member.role}</p>
+                              <div className="member-badges">
+                                {member.role.toLowerCase().includes('managing director') && (
+                                  <span className="badge leadership">👑 Leadership</span>
+                                )}
+                                {member.role.toLowerCase().includes('staff') && (
+                                  <span className="badge staff">🛡️ Staff</span>
+                                )}
+                                {member.role.toLowerCase().includes('event') && (
+                                  <span className="badge event">🎉 Events</span>
+                                )}
+                              </div>
+                              <button 
+                                className="profile-btn"
+                                onClick={() => openUserProfile(member.user_id)}
+                                title={`View ${member.username}'s profile`}
+                              >
+                                <span>Open Profile</span>
+                              </button>
+                            </div>
                           </div>
                         </div>
-                        <div className="member-info">
-                          <h3 className="member-name">{member.username}</h3>
-                          <p className="team-role">{member.role}</p>
-                          <div className="member-badges">
-                            {member.role.toLowerCase().includes('managing director') && (
-                              <span className="badge leadership">👑 Leadership</span>
-                            )}
-                            {member.role.toLowerCase().includes('staff') && (
-                              <span className="badge staff">🛡️ Staff</span>
-                            )}
-                            {member.role.toLowerCase().includes('event') && (
-                              <span className="badge event">🎉 Events</span>
-                            )}
-                          </div>
-                          <button 
-                            className="user-profile-btn"
-                            onClick={() => openUserProfile(member.user_id)}
-                            title="View User Profile"
-                          >
-                            Open Profile
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </>
           )}
         </div>
@@ -300,23 +373,42 @@ function OurTeam() {
             <div className="footer-section">
               <h3>Tamil Pasanga VTC</h3>
               <p>A premier virtual trucking company dedicated to bringing together Tamil-speaking trucking enthusiasts from around the world.</p>
+              <div className="social-links">
+                <a href="#" className="social-link">📱</a>
+                <a href="#" className="social-link">🎮</a>
+                <a href="#" className="social-link">📺</a>
+              </div>
             </div>
             <div className="footer-section">
               <h4>Quick Links</h4>
               <ul>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
+                <li><Link to="/about">About Us</Link></li>
                 <li><Link to="/our-team">Our Team</Link></li>
                 <li><Link to="/events">Events</Link></li>
+                <li><Link to="/rules">Rules</Link></li>
+                <li><Link to="/contact">Contact</Link></li>
               </ul>
             </div>
             <div className="footer-section">
-              <h4>Contact</h4>
-              <p>Join our community and start your trucking journey with us!</p>
+              <h4>Community</h4>
+              <ul>
+                <li><a href="#">Join Discord</a></li>
+                <li><a href="#">TruckersMP Profile</a></li>
+                <li><a href="#">Steam Group</a></li>
+                <li><a href="#">Events Calendar</a></li>
+              </ul>
+            </div>
+            <div className="footer-section">
+              <h4>Contact Info</h4>
+              <p>Ready to join our trucking family?</p>
+              <p>📧 Contact us through our discord</p>
+              <p>🚛 Start your journey today</p>
             </div>
           </div>
           <div className="footer-bottom">
             <p>&copy; 2024 Tamil Pasanga VTC. All rights reserved.</p>
+            <p>Built with passion for the trucking community</p>
           </div>
         </div>
       </footer>
