@@ -221,39 +221,78 @@ function OurTeam() {
   return (
     <div className="about">
       {/* Navigation */}
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`} ref={navbarRef}>
+     <nav ref={navbarRef} className="navbar">
         <div className="nav-container">
-          <Link to="/" className="nav-logo">
+          <div className="nav-logo">
+            <Link to="/">
               <span className="logo-part-1">Tamil Pasanga</span>
-            
-          </Link>
-          <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-            <Link to="/" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              Home
-            </Link>
-            <Link to="/about" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              About
-            </Link>
-            <Link to="/our-team" className="nav-link active" onClick={() => setIsMobileMenuOpen(false)}>
-              Our Team
-            </Link>
-            <Link to="/events" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              Events
-            </Link>
-            <Link to="/rules" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              Rules
-            </Link>
-            <Link to="/contact" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              Contact
             </Link>
           </div>
-          <button className="mobile-menu-button" onClick={toggleMobileMenu}>
-            <div className="hamburger">
+          
+          {/* Desktop Menu */}
+          <ul className="nav-menu">
+            <li className="nav-item">
+              <Link to="/" className="nav-link active">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/about" className="nav-link">About</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/rules" className="nav-link">Rules</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/events" className="nav-link">Events</Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/team" className="nav-link">Our Team</Link>
+            </li>
+            <li className="nav-item">
+              <a href="#gallery" className="nav-link">Gallery</a>
+            </li>
+            <li className="nav-item">
+              <Link to="/contact" className="nav-link">Contact</Link>
+            </li>
+          </ul>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="mobile-menu-button"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            <span className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}>
               <span></span>
               <span></span>
               <span></span>
-            </div>
+            </span>
           </button>
+
+          {/* Mobile Menu */}
+          <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+            <ul className="mobile-nav-menu">
+              <li className="mobile-nav-item">
+                <Link to="/" className="mobile-nav-link active" onClick={toggleMobileMenu}>Home</Link>
+              </li>
+              <li className="mobile-nav-item">
+                <Link to="/about" className="mobile-nav-link" onClick={toggleMobileMenu}>About</Link>
+              </li>
+              <li className="mobile-nav-item">
+                <Link to="/rules" className="mobile-nav-link" onClick={toggleMobileMenu}>Rules</Link>
+              </li>
+              <li className="mobile-nav-item">
+                <Link to="/events" className="mobile-nav-link" onClick={toggleMobileMenu}>Events</Link>
+              </li>
+              <li className="mobile-nav-item">
+                <Link to="/team" className="mobile-nav-link" onClick={toggleMobileMenu}>Our Team</Link>
+              </li>
+              <li className="mobile-nav-item">
+                <a href="#gallery" className="mobile-nav-link" onClick={toggleMobileMenu}>Gallery</a>
+              </li>
+              <li className="mobile-nav-item">
+                <Link to="/contact" className="mobile-nav-link" onClick={toggleMobileMenu}>Contact</Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
 
