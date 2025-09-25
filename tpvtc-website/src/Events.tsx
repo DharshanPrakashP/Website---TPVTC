@@ -156,6 +156,20 @@ function Events() {
     window.open(`https://truckersmp.com/events/${id}`, '_blank');
   };
 
+  const sortedEvents = events.sort((a, b) => {
+    const dateA = new Date(a.meetup_at);
+    const dateB = new Date(b.meetup_at);
+    return dateA.getTime() - dateB.getTime();
+  });
+
+  const convertToIST = (utcDate: string) => {
+    const date = new Date(utcDate);
+    const offsetIST = 5.5 * 60 * 60 * 1000; // IST is UTC+5:30
+    return new Date(date.getTime() + offsetIST).toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+    });
+  };
+
   return (
     <div className="Events">
       {/* Navigation */}
@@ -254,14 +268,14 @@ function Events() {
 
           {!loading && !error && (
             <div ref={eventsGridRef} className="events-grid">
-              {events.map((event) => (
+              {sortedEvents.map((event) => (
                 <div key={event.id} className="event-card">
                   <img src={event.banner} alt={event.name} className="event-banner" />
                   <div className="event-details">
                     <h3 className="event-name">{event.name}</h3>
                     <p className="event-game">ETS2 • To be determined</p>
-                    <p className="event-time">Meet: {new Date(event.meetup_at).toLocaleString()}</p>
-                    <p className="event-time">Start: {new Date(event.start_at).toLocaleString()}</p>
+                    <p className="event-time">Meet: {convertToIST(event.meetup_at)}</p>
+                    <p className="event-time">Start: {convertToIST(event.start_at)}</p>
                     <p className="event-route">
                       From <strong>{event.departure.city}</strong> ({event.departure.location}) → <strong>{event.arrive.city}</strong> ({event.arrive.location})
                     </p>

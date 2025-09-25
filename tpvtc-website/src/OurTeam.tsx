@@ -177,13 +177,28 @@ function OurTeam() {
     return groups
   }, {})
 
-  // Sort groups so 'Driver' is always last, others by descending order
-  const sortedRoleGroups = Object.entries(groupedMembers).sort(([roleA, membersA], [roleB, membersB]) => {
-    if (roleA.toLowerCase() === 'driver') return 1;
-    if (roleB.toLowerCase() === 'driver') return -1;
-    const orderA = membersA[0]?.roles?.[0]?.order || 999;
-    const orderB = membersB[0]?.roles?.[0]?.order || 999;
-    return orderB - orderA;
+  const rolePriority = [
+    'Managing Director',
+    'Marketing Executive',
+    'Human Resource Manager',
+    'Human Resource Staff',
+    'Trainer',
+    'Event Manager',
+    'Event Staff',
+    'Event Organizer',
+    'Media Manager',
+    'Media Staff',
+    'Media Editor',
+    'Senior Driver',
+    'Driver',
+    'Trainee'
+  ];
+
+  // Sort groups by the predefined role priority
+  const sortedRoleGroups = Object.entries(groupedMembers).sort(([roleA], [roleB]) => {
+    const indexA = rolePriority.indexOf(roleA);
+    const indexB = rolePriority.indexOf(roleB);
+    return indexA - indexB;
   });
 
   useEffect(() => {

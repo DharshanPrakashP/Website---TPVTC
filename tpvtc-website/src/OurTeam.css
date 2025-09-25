@@ -346,9 +346,7 @@
 }
 
 .badge.staff {
-  background: rgba(0, 123, 255, 0.1);
-  color: #007bff;
-  border-color: rgba(0, 123, 255, 0.3);
+  display: none;
 }
 
 .badge.event {
