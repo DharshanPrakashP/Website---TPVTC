@@ -174,6 +174,7 @@ function OurTeam() {
 
   const rolePriority = [
     'Managing Director',
+    'Developer',
     'Marketing Executive',
     'Human Resources Team',
     'Trainer',
