@@ -178,6 +178,7 @@ function OurTeam() {
     'Human Resources Team',
     'Trainer',
     'Events Team',
+    'Event Organizer',
     'Designing Team',
     'Media Manager',
     'Media Staff',
