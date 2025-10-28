@@ -180,6 +180,7 @@ function OurTeam() {
     'Events Team',
     'Event Organizer',
     'Designing Team',
+    'Media Team',
     'Media Manager',
     'Media Staff',
     'Media Editor',
