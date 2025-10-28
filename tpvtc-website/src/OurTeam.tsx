@@ -146,13 +146,8 @@ function OurTeam() {
         }
         
         if (data && data.response && data.response.members) {
-          // Sort members by role order (from the roles array in each member)
-          const sortedMembers = data.response.members.sort((a, b) => {
-            const aOrder = a.roles?.[0]?.order || 999
-            const bOrder = b.roles?.[0]?.order || 999
-            return aOrder - bOrder
-          })
-          setTeamMembers(sortedMembers)
+          // Don't sort here - let the component handle sorting by rolePriority
+          setTeamMembers(data.response.members)
         } else {
           setError(lastError?.message || 'Failed to fetch team members')
         }
@@ -198,7 +193,12 @@ function OurTeam() {
   const sortedRoleGroups = Object.entries(groupedMembers).sort(([roleA], [roleB]) => {
     const indexA = rolePriority.indexOf(roleA);
     const indexB = rolePriority.indexOf(roleB);
-    return indexA - indexB;
+    
+    // If role is not in priority list, put it at the end
+    const finalIndexA = indexA === -1 ? 999 : indexA;
+    const finalIndexB = indexB === -1 ? 999 : indexB;
+    
+    return finalIndexA - finalIndexB;
   });
 
   useEffect(() => {
