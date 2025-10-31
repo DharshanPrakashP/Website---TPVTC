@@ -320,7 +320,7 @@ function OurTeam() {
               <span className="separator">›</span>
               <span className="current">Our Team</span>
             </div>
-            <h1 className="hero-title" ref={titleRef}>Meet Our Team</h1>
+            <h1 className="team-hero-title" ref={titleRef}>Meet Our Team</h1>
             <p className="hero-description">
               Discover the passionate individuals who drive Tamil Pasanga VTC forward
             </p>
