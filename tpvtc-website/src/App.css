@@ -131,8 +131,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  background-image: url('/images/hero-bg.PNG');
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/hero-bg.PNG');
 
 }
 
