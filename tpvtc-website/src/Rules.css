@@ -197,7 +197,7 @@
 }
 
 .rules-breadcrumb a:hover {
-  color: #ffffff;
+  color: #e55a2e;
 }
 
 .rules-separator {
@@ -514,7 +514,7 @@
 
 .rule-category:hover li {
   transform: translateX(5px);
-  color: rgba(255, 255, 255, 0.9);
+  color: #333333;
 }
 
 /* Breadcrumb enhanced animations */
